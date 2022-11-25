@@ -11,4 +11,7 @@
     <string name="bookmark_this">Bookmark this</string>
     <string name="voters">Voters:</string>
     <string name="rating">Rating:</string>
+    <string name="actor">Actor</string>
+    <string name="dash">-</string>
+    <string name="biography">Biography</string>
 </resources>
