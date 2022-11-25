@@ -6,4 +6,9 @@
     <string name="upcoming">Upcoming</string>
     <string name="some_error_occured">Some Error Occurred</string>
     <string name="retry">Retry</string>
+    <string name="genres">Genres</string>
+    <string name="overview">Overview</string>
+    <string name="bookmark_this">Bookmark this</string>
+    <string name="voters">Voters:</string>
+    <string name="rating">Rating:</string>
 </resources>
