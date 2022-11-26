@@ -16,4 +16,8 @@
     <string name="biography">Biography</string>
     <string name="search">Search</string>
     <string name="no_search_results_ntry_another">No Search Results\ntry Another</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="delete_all">Delete All</string>
+    <string name="no_bookmarks_found_nplease_bookmark">No bookmarks found\nplease Bookmark</string>
+    <string name="a">A</string>
 </resources>
