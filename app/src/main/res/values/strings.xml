@@ -14,4 +14,6 @@
     <string name="actor">Actor</string>
     <string name="dash">-</string>
     <string name="biography">Biography</string>
+    <string name="search">Search</string>
+    <string name="no_search_results_ntry_another">No Search Results\ntry Another</string>
 </resources>
