@@ -11,9 +11,11 @@ import com.example.wovie.db.entity.BookmarkEntity
 interface BookmarksDao {
     @Insert
     suspend fun insert(bookmark: BookmarkEntity)
-
     @Delete
     suspend fun delete(bookmark: BookmarkEntity)
+
+    @Query("SELECT * FROM bookmarks WHERE movie_id=:id")
+    suspend fun getBookmark(id: Int): BookmarkEntity
 
     @Query("SELECT * FROM bookmarks")
     suspend fun getAll(): List<BookmarkEntity>
