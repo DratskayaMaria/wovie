@@ -86,7 +86,7 @@ class MainViewModel @Inject constructor(
         }
 
     }
-
+    
     fun setBookMarkStatus(film: Film) {
         film.isBookmarked = !film.isBookmarked
         loading.postValue(true)

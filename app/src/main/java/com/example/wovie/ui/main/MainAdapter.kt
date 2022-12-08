@@ -21,7 +21,7 @@ class MainAdapter(
         return FilmViewHolder(binding, object : OnFilmClickListener {
             override fun onItemClick(film: Film?) {
                 film?.let {
-                    val action: NavDirections = MainFragmentDirections.actionMainFragmentToFilmFragment(film)
+                    val action: NavDirections = MainFragmentDirections.actionHomeFragmentToFilmFragment(film)
                     Navigation.findNavController(binding.root).navigate(action)
                 }
             }

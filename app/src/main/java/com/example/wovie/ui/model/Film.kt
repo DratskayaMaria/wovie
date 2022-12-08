@@ -8,6 +8,7 @@ data class Film (
     val rating: Double,
     val countFeedbacks: Int,
     val description: String,
-    val title: String
+    val title: String,
+    var isBookmarked: Boolean = false
 )
 

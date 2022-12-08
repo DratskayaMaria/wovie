@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation"
     app:startDestination="@id/mainFragment">
-
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.wovie.ui.main.MainFragment"
@@ -20,7 +19,6 @@
             android:id="@+id/action_homeFragment_to_bookMarksFragment"
             app:destination="@id/bookMarksFragment" />
     </fragment>
-
     <fragment
         android:id="@+id/filmFragment"
         android:name="com.example.wovie.ui.film.FilmFragment"
@@ -33,7 +31,6 @@
             app:destination="@id/actorFragment"
             app:popUpTo="@id/filmFragment" />
     </fragment>
-
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.wovie.ui.search.SearchFragment"
@@ -43,7 +40,6 @@
             app:destination="@id/filmFragment"
             app:popUpTo="@id/searchFragment" />-->
     </fragment>
-
     <fragment
         android:id="@+id/bookMarksFragment"
         android:name="com.example.wovie.ui.bookmarks.BookmarksFragment"
@@ -53,7 +49,6 @@
             app:destination="@id/filmFragment"
             app:popUpTo="@id/bookMarksFragment" />-->
     </fragment>
-
     <fragment
         android:id="@+id/actorFragment"
         android:name="com.example.wovie.ui.actor.ActorFragment"
@@ -63,5 +58,4 @@
             app:destination="@id/filmFragment"
             app:popUpTo="@id/actorFragment" />-->
     </fragment>
-
 </navigation>
