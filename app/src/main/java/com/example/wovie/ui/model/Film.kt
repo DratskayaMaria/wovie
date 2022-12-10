@@ -1,5 +1,9 @@
 package com.example.wovie.ui.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Film (
     val filmId: Int,
     val poster: String?,
@@ -10,5 +14,4 @@ data class Film (
     val description: String,
     val title: String,
     var isBookmarked: Boolean = false
-)
-
+) : Parcelable
