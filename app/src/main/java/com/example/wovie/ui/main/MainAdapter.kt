@@ -45,6 +45,4 @@ class MainAdapter(
     }
 
     override fun getItemCount(): Int = films.size
-
-
 }

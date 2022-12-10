@@ -8,7 +8,7 @@
         android:name="com.example.wovie.ui.main.MainFragment"
         android:label="MainFragment" >
         <action
-            android:id="@+id/action_homeFragment_to_filmFragment"
+            android:id="@+id/action_mainFragment_to_filmFragment"
             app:destination="@id/filmFragment"
             app:popUpTo="@id/mainFragment" />
         <action
@@ -35,27 +35,27 @@
         android:id="@+id/searchFragment"
         android:name="com.example.wovie.ui.search.SearchFragment"
         android:label="fragment_search">
-        <action
+        <!--<action
             android:id="@+id/action_searchFragment_to_filmFragment"
             app:destination="@id/filmFragment"
-            app:popUpTo="@id/searchFragment" />
+            app:popUpTo="@id/searchFragment" />-->
     </fragment>
     <fragment
         android:id="@+id/bookMarksFragment"
         android:name="com.example.wovie.ui.bookmarks.BookmarksFragment"
         android:label="fragment_bookmarks">
-        <action
+        <!--<action
             android:id="@+id/action_bookMarksFragment_to_filmFragment"
             app:destination="@id/filmFragment"
-            app:popUpTo="@id/bookMarksFragment" />
+            app:popUpTo="@id/bookMarksFragment" />-->
     </fragment>
     <fragment
         android:id="@+id/actorFragment"
         android:name="com.example.wovie.ui.actor.ActorFragment"
         android:label="fragment_actor">
-        <action
+        <!--<action
             android:id="@+id/action_actorFragment_to_filmFragment"
             app:destination="@id/filmFragment"
-            app:popUpTo="@id/actorFragment" />
+            app:popUpTo="@id/actorFragment" />-->
     </fragment>
 </navigation>
