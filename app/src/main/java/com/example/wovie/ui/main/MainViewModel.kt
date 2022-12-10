@@ -11,19 +11,22 @@ import com.example.wovie.api.response.TopRated
 import com.example.wovie.api.response.Upcoming
 import com.example.wovie.db.BookmarkRepository
 import com.example.wovie.ui.model.Film
+import com.example.wovie.util.toFilm
+import dagger.hilt.android.lifecycle.HiltViewModel
+import java.net.UnknownHostException
 import javax.inject.Inject
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@HiltViewModel
 class MainViewModel @Inject constructor(
     private val apiService: ApiService,
     private val bookmarkRepository: BookmarkRepository
 ) : ViewModel() {
     val msg = MutableLiveData<String>()
     val loading = MutableLiveData<Boolean>()
-
     val popularMutableLiveData = MutableLiveData<List<Film>>()
     val nowPlayingMutableLiveData = MutableLiveData<List<Film>>()
     val topRatedMutableLiveData = MutableLiveData<List<Film>>()
@@ -45,31 +48,32 @@ class MainViewModel @Inject constructor(
                         var nowPlayingResults: NowPlaying? = null
                         var topRatedResults: TopRated? = null
                         var upcomingResults: Upcoming? = null
+                        var bookmarkedMovies: List<Int> = mutableListOf()
                         val popular = async {
                             popularResults = apiService.getPopularMovies()
                             nowPlayingResults = apiService.getNowPlayingMovies()
                             topRatedResults = apiService.getTopRatedMovies()
                             upcomingResults = apiService.getUpcomingMovies()
+                            bookmarkedMovies = bookmarkRepository.getAllBookmarks().map { it.movieId }
                         }
                         popular.await().let {
                             Log.i("awaited",it.toString())
                             popularMutableLiveData.postValue(popularResults?.results?.map { response ->
-                                response.toFilm()
+                                response.toFilm(bookmarkedMovies.contains(response.id))
                             })
                             nowPlayingMutableLiveData.postValue(nowPlayingResults?.results?.map { response ->
-                                response.toFilm()
+                                response.toFilm(bookmarkedMovies.contains(response.id))
                             })
                             topRatedMutableLiveData.postValue(topRatedResults?.results?.map { response ->
-                                response.toFilm()
+                                response.toFilm(bookmarkedMovies.contains(response.id))
                             })
                             upcomingMutableLiveData.postValue(upcomingResults?.results?.map { response ->
-                                response.toFilm()
+                                response.toFilm(bookmarkedMovies.contains(response.id))
                             })
                         }
                     } catch (exception: Exception) {
                         Log.i("popular exeception", exception.message.toString())
                     }
-
                     loading.postValue(false)
                 }
             }
@@ -80,9 +84,7 @@ class MainViewModel @Inject constructor(
             catch (exception :Exception){
                 Log.i("error",exception.message.toString())
             }
-
         }
-
     }
 
     fun setBookMarkStatus(film: Film) {

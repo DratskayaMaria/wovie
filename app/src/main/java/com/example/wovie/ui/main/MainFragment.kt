@@ -12,22 +12,21 @@ import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wovie.databinding.FragmentMainBinding
+import com.example.wovie.ui.OnBookmarkClickListener
 import com.example.wovie.ui.model.Film
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), OnBookmarkClickListener {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var nowPlayingAdapter: MainAdapter
     private lateinit var popularAdapter: MainAdapter
     private lateinit var topRatedAdapter: MainAdapter
     private lateinit var upcomingAdapter: MainAdapter
-
     private lateinit var nowPlayingList: MutableList<Film>
     private lateinit var popularList: MutableList<Film>
     private lateinit var topRatedList: MutableList<Film>
     private lateinit var upcomingList: MutableList<Film>
-
     private var _binding: FragmentMainBinding? = null
     val binding: FragmentMainBinding
         get() = _binding!!
@@ -50,6 +49,11 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.getFilms()
+    }
+
     private fun initRootView() {
         binding.nowPlayingRecyclerview.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -61,16 +65,15 @@ class MainFragment : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
 
-        nowPlayingAdapter = MainAdapter(nowPlayingList, viewModel, requireContext())
-        popularAdapter = MainAdapter(popularList, viewModel, requireContext())
-        topRatedAdapter = MainAdapter(topRatedList, viewModel, requireContext())
-        upcomingAdapter = MainAdapter(upcomingList, viewModel, requireContext())
+        nowPlayingAdapter = MainAdapter(nowPlayingList, viewModel, requireContext(), this)
+        popularAdapter = MainAdapter(popularList, viewModel, requireContext(), this)
+        topRatedAdapter = MainAdapter(topRatedList, viewModel, requireContext(), this)
+        upcomingAdapter = MainAdapter(upcomingList, viewModel, requireContext(), this)
 
         binding.nowPlayingRecyclerview.adapter = nowPlayingAdapter
         binding.popularRecyclerview.adapter = popularAdapter
         binding.topRatedRecyclerview.adapter = topRatedAdapter
         binding.upcomingRecyclerview.adapter = upcomingAdapter
-
         binding.nowPlayingRecyclerview.isNestedScrollingEnabled = false
         binding.popularRecyclerview.isNestedScrollingEnabled = false
         binding.topRatedRecyclerview.isNestedScrollingEnabled = false
@@ -117,11 +120,42 @@ class MainFragment : Fragment() {
         binding.retryButton.setOnClickListener { viewModel.getFilms() }
         viewModel.loading.observe(viewLifecycleOwner, {
             binding.progressbar.isVisible = it != null && it
+            binding.homeScroll.isVisible = !it
         })
         viewModel.msg.observe(viewLifecycleOwner, {
             if (it != null) {
                 Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    override fun setBookmarkedForFilm(id: Int) {
+        nowPlayingList.map {
+            if (it.filmId == id) {
+                it.isBookmarked = true
+            }
+        }
+        nowPlayingAdapter.notifyDataSetChanged()
+
+        popularList.map {
+            if (it.filmId == id) {
+                it.isBookmarked = true
+            }
+        }
+        popularAdapter.notifyDataSetChanged()
+
+        topRatedList.map {
+            if (it.filmId == id) {
+                it.isBookmarked = true
+            }
+        }
+        topRatedAdapter.notifyDataSetChanged()
+
+        upcomingList.map {
+            if (it.filmId == id) {
+                it.isBookmarked = true
+            }
+        }
+        upcomingAdapter.notifyDataSetChanged()
     }
 }
