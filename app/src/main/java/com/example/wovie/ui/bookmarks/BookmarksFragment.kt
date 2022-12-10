@@ -45,7 +45,7 @@ class BookmarksFragment : Fragment() {
             val alertDialog =
                 AlertDialog.Builder(requireContext())
             alertDialog.setTitle("Please Confirm")
-            alertDialog.setMessage("Are you sure you want to delete all of them")
+            alertDialog.setMessage("Are you sure you want to delete all of them?")
             alertDialog.setNegativeButton(
                 "No"
             ) { dialog: DialogInterface?, pos: Int -> }

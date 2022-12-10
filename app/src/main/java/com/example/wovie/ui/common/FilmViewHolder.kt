@@ -1,4 +1,4 @@
-package com.example.wovie.ui.viewholder
+package com.example.wovie.ui.common
 
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
