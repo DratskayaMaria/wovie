@@ -11,8 +11,6 @@ import com.example.wovie.api.response.TopRated
 import com.example.wovie.api.response.Upcoming
 import com.example.wovie.db.BookmarkRepository
 import com.example.wovie.ui.model.Film
-import com.example.wovie.util.toFilm
-import java.net.UnknownHostException
 import javax.inject.Inject
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -86,7 +84,7 @@ class MainViewModel @Inject constructor(
         }
 
     }
-    
+
     fun setBookMarkStatus(film: Film) {
         film.isBookmarked = !film.isBookmarked
         loading.postValue(true)

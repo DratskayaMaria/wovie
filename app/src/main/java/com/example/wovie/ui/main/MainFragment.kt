@@ -55,6 +55,11 @@ class MainFragment : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.popularRecyclerview.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.topRatedRecyclerview.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.upcomingRecyclerview.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
 
         nowPlayingAdapter = MainAdapter(nowPlayingList, viewModel, requireContext())
         popularAdapter = MainAdapter(popularList, viewModel, requireContext())
@@ -90,6 +95,20 @@ class MainFragment : Fragment() {
             popularAdapter.notifyDataSetChanged()
             binding.homeScroll.isVisible = popularList.size != 0
             binding.noResultsLayout.isVisible = popularList.size == 0
+        }
+        viewModel.topRatedMutableLiveData.observe(viewLifecycleOwner) { films ->
+            topRatedList.clear()
+            topRatedList.addAll(films)
+            topRatedAdapter.notifyDataSetChanged()
+            binding.homeScroll.isVisible = topRatedList.size != 0
+            binding.noResultsLayout.isVisible = topRatedList.size == 0
+        }
+        viewModel.upcomingMutableLiveData.observe(viewLifecycleOwner) { films ->
+            upcomingList.clear()
+            upcomingList.addAll(films)
+            upcomingAdapter.notifyDataSetChanged()
+            binding.homeScroll.isVisible = upcomingList.size != 0
+            binding.noResultsLayout.isVisible = upcomingList.size == 0
         }
         binding.bookMarks.setOnClickListener {
             val action: NavDirections = MainFragmentDirections.actionHomeFragmentToBookMarksFragment()

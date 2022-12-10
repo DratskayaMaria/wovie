@@ -12,7 +12,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
-private const val BASE_URL = "https://api.themoviedb.org/3/"
+private const val BASE_URL = "http://api.themoviedb.org/3/"
 private const val API_KEY = "0360553e8b280942cadda1ad5ef33f42"
 const val POPULAR_MOVIES_URL = "movie/popular"
 const val NOW_PLAYING_URL = "movie/now_playing"
