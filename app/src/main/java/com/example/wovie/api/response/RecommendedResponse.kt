@@ -1,6 +1,6 @@
 package com.example.wovie.api.response
 
-data class Popular(
+data class RecommendedResponse(
     var page: Int = 0,
     var results: List<FilmResponse>? = null,
     var total_pages: Int = 0,

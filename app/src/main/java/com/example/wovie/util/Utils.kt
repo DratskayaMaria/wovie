@@ -4,7 +4,9 @@ import android.content.Context
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.example.wovie.R
+import com.example.wovie.api.response.ActorResponse
 import com.example.wovie.api.response.FilmResponse
+import com.example.wovie.ui.model.Actor
 import com.example.wovie.ui.model.Film
 
 const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500"
@@ -26,4 +28,13 @@ fun FilmResponse.toFilm(isBookmarked: Boolean = false): Film = Film(
     description = this.overview,
     title = this.title,
     isBookmarked = isBookmarked
+)
+
+fun ActorResponse.toActor(): Actor = Actor(
+    this.id,
+    this.name,
+    this.birthday,
+    this.deathday,
+    this.biography,
+    this.profile_path
 )

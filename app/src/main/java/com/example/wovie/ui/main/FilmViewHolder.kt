@@ -1,10 +1,9 @@
-package com.example.wovie.ui.common
+package com.example.wovie.ui.main
 
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wovie.R
 import com.example.wovie.databinding.FilmItemBinding
-import com.example.wovie.ui.main.OnFilmClickListener
 import com.example.wovie.ui.model.Film
 import com.example.wovie.util.loadImage
 
