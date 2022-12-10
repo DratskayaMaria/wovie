@@ -13,6 +13,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -104,9 +105,9 @@ class SearchFragment : Fragment(), SearchAdapter.OnSearchResultClickListener {
     }
 
     override fun onResultClick(film: Film) {
-        /*val action: NavDirections =
+        val action: NavDirections =
             SearchFragmentDirections.actionSearchFragmentToFilmFragment(film)
-        Navigation.findNavController(binding.root).navigate(action)*/
+        Navigation.findNavController(binding.root).navigate(action)
     }
 }
 

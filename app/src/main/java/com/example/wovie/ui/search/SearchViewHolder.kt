@@ -1,7 +1,10 @@
 package com.example.wovie.ui.search
 
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wovie.databinding.FragmentSearchItemBinding
+import com.example.wovie.ui.main.MainFragmentDirections
 import com.example.wovie.ui.model.Film
 import com.example.wovie.util.loadImage
 

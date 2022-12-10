@@ -1,8 +1,13 @@
 package com.example.wovie.api
 
+import com.example.wovie.api.response.ActorResponse
+import com.example.wovie.api.response.CastResponse
 import com.example.wovie.api.response.FilmResponse
+import com.example.wovie.api.response.Genre
+import com.example.wovie.api.response.GenreResponse
 import com.example.wovie.api.response.NowPlaying
 import com.example.wovie.api.response.Popular
+import com.example.wovie.api.response.RecommendedResponse
 import com.example.wovie.api.response.SearchResponse
 import com.example.wovie.api.response.TopRated
 import com.example.wovie.api.response.Upcoming
@@ -24,7 +29,10 @@ const val TOP_RATED_URL = "movie/top_rated"
 const val UPCOMING_URL = "movie/upcoming"
 const val MOVIE_BY_ID = "movie/{movie_id}"
 const val SEARCH = "search/movie"
-
+const val GENRES_BY_MOVIE = "genre/movie/list"
+const val ACTORS_BY_MOVIE = "movie/{movie_id}/credits"
+const val RECOMMENDED_BY_MOVIE = "movie/{movie_id}/recommendations"
+const val ACTOR_BY_ID = "person/{person_id}"
 
 interface ApiService {
 
@@ -49,6 +57,19 @@ interface ApiService {
     suspend fun getSearchResults(
         @Query("query") query: String?
     ): SearchResponse?
+
+    @GET(GENRES_BY_MOVIE)
+    suspend fun getGenres(): GenreResponse?
+
+    @GET(ACTORS_BY_MOVIE)
+    suspend fun getActorsByMovie(
+        @Path("movie_id") movieId: Int,
+    ): CastResponse?
+
+    @GET(RECOMMENDED_BY_MOVIE)
+    suspend fun getRecommendedByMovie(
+        @Path("movie_id") movieId: Int,
+    ): RecommendedResponse?
 
     companion object {
         fun getInstance(): ApiService {

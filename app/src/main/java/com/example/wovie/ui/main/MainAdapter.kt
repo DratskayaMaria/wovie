@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.wovie.databinding.FilmItemBinding
 import com.example.wovie.ui.OnBookmarkClickListener
 import com.example.wovie.ui.model.Film
-import com.example.wovie.ui.common.FilmViewHolder
 
 
 class MainAdapter(
