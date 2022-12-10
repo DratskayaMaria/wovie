@@ -8,7 +8,7 @@ data class Film (
     val filmId: Int,
     val poster: String?,
     val cover: String?,
-    val genres: List<Int>,
+    val genres: List<Int>?,
     val rating: Double,
     val countFeedbacks: Int,
     val description: String,
