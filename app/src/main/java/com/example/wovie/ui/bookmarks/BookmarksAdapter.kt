@@ -10,7 +10,7 @@ import com.example.wovie.databinding.FilmItemBinding
 import com.example.wovie.ui.main.MainFragmentDirections
 import com.example.wovie.ui.main.OnFilmClickListener
 import com.example.wovie.ui.model.Film
-import com.example.wovie.ui.viewholder.FilmViewHolder
+import com.example.wovie.ui.common.FilmViewHolder
 
 
 class BookmarksAdapter(
