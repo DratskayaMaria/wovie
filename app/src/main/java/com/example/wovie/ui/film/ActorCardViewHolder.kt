@@ -15,7 +15,7 @@ class ActorCardViewHolder(
         binding.title.text = actor.name
         binding.root.setOnClickListener {
             val action: NavDirections =
-                FilmFragmentDirections.actionFilmFragmentToActorFragment(actor)
+                FilmFragmentDirections.actionFilmFragmentToActorFragment(actor.actorId)
             Navigation.findNavController(binding.root).navigate(action)
         }
     }

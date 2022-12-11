@@ -71,6 +71,11 @@ interface ApiService {
         @Path("movie_id") movieId: Int,
     ): RecommendedResponse?
 
+    @GET(ACTOR_BY_ID)
+    suspend fun getActorById(
+        @Path("person_id") personId: Int,
+    ): ActorResponse?
+
     companion object {
         fun getInstance(): ApiService {
             val logging = HttpLoggingInterceptor()

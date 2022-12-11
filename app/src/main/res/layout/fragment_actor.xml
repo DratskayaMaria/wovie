@@ -51,21 +51,7 @@
         app:layout_constraintTop_toBottomOf="@id/top_bar" />
 
     <TextView
-        android:id="@+id/first_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/top_bar"
-        app:layout_constraintStart_toEndOf="@id/actor_picture"
-        tools:text="Brad" />
-
-    <TextView
-        android:id="@+id/last_name"
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -75,7 +61,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         tools:text="Pitt"
-        app:layout_constraintTop_toBottomOf="@id/first_name"
+        app:layout_constraintTop_toTopOf="@id/actor_picture"
         app:layout_constraintStart_toEndOf="@id/actor_picture"
         />
 
@@ -89,7 +75,7 @@
         android:textAlignment="center"
         android:textSize="14sp"
         tools:text="1234"
-        app:layout_constraintTop_toBottomOf="@id/last_name"
+        app:layout_constraintTop_toBottomOf="@id/name"
         app:layout_constraintStart_toEndOf="@id/actor_picture"
         />
 
@@ -103,7 +89,7 @@
         android:textAlignment="center"
         android:textSize="14sp"
         android:text="@string/dash"
-        app:layout_constraintTop_toBottomOf="@id/last_name"
+        app:layout_constraintTop_toBottomOf="@id/name"
         app:layout_constraintStart_toEndOf="@id/birth_year"
         />
 
@@ -117,8 +103,8 @@
         android:textAlignment="center"
         android:textSize="14sp"
         android:textStyle="bold"
-        tools:text="..."
-        app:layout_constraintTop_toBottomOf="@id/last_name"
+        android:text="..."
+        app:layout_constraintTop_toBottomOf="@id/name"
         app:layout_constraintStart_toEndOf="@id/dash"
         />
 
