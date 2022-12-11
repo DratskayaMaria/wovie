@@ -64,11 +64,7 @@
         android:label="fragment_actor">
         <argument
             android:name="result"
-            app:argType="com.example.wovie.ui.model.Actor" />
-        <!--<action
-            android:id="@+id/action_actorFragment_to_filmFragment"
-            app:destination="@id/filmFragment"
-            app:popUpTo="@id/actorFragment" />-->
+            app:argType="integer" />
     </fragment>
 
 </navigation>
