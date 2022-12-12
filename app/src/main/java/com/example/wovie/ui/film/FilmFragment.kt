@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.wovie.R
 import com.example.wovie.databinding.FragmentFilmBinding
 import com.example.wovie.ui.main.MainAdapter
 import com.example.wovie.ui.model.Actor
@@ -74,7 +75,10 @@ class FilmFragment : Fragment() {
             film.genres?.map { filmGenreId ->
                 val genre = responseGenres?.first { it.id == filmGenreId }?.name!!
                 genre
-            }?.let { genres!!.addAll(it) }
+            }?.let {
+                genres?.clear()
+                genres?.addAll(it)
+            }
             val adapter = genres?.let { GenreAdapter(it) }
             binding.generesRecyclerview.adapter = adapter
             film.cover?.let { loadImage(requireContext(), it, binding.coverImage) }
@@ -89,6 +93,21 @@ class FilmFragment : Fragment() {
             binding.generesRecyclerview.layoutManager = layoutManager
             binding.backButton.setOnClickListener { closeFragment() }
             binding.filmContainer.visibility = View.VISIBLE
+            val bookmarkRes = if (film.isBookmarked) {
+                R.drawable.bookmark
+            } else {
+                R.drawable.empty_bookmark
+            }
+            binding.bookmark.setImageResource(bookmarkRes)
+            binding.bookmark.setOnClickListener {
+                filmViewModel.setBookMarkStatus(film)
+                val bookmarkRes = if (film.isBookmarked) {
+                    R.drawable.bookmark
+                } else {
+                    R.drawable.empty_bookmark
+                }
+                binding.bookmark.setImageResource(bookmarkRes)
+            }
         }
         filmViewModel.actors.observe(viewLifecycleOwner) { actors ->
             actorsList.clear()

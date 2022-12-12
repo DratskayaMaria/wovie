@@ -25,7 +25,7 @@ class BookmarksAdapter(
             override fun onItemClick(film: Film?) {
                 film?.let {
                     val action: NavDirections =
-                        MainFragmentDirections.actionMainFragmentToFilmFragment(film)
+                        BookmarksFragmentDirections.actionBookMarksFragmentToFilmFragment(film)
                     Navigation.findNavController(binding.root).navigate(action)
                 }
             }

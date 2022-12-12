@@ -52,10 +52,10 @@
         android:id="@+id/bookMarksFragment"
         android:name="com.example.wovie.ui.bookmarks.BookmarksFragment"
         android:label="fragment_bookmarks">
-        <!--<action
+        <action
             android:id="@+id/action_bookMarksFragment_to_filmFragment"
             app:destination="@id/filmFragment"
-            app:popUpTo="@id/bookMarksFragment" />-->
+            app:popUpTo="@id/bookMarksFragment" />
     </fragment>
 
     <fragment

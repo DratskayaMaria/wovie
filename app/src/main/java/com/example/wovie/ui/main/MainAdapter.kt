@@ -10,16 +10,11 @@ import com.example.wovie.databinding.FilmItemBinding
 import com.example.wovie.ui.OnBookmarkClickListener
 import com.example.wovie.ui.model.Film
 
-
 class MainAdapter(
-
     private val films: MutableList<Film>,
     private val viewModel: MainViewModel,
-    private val context: Context,
     private val onBookmarkClickListener: OnBookmarkClickListener
-
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding =
             FilmItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)

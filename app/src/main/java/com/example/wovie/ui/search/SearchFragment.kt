@@ -13,6 +13,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -23,6 +24,7 @@ import com.example.wovie.ui.model.Film
 import com.example.wovie.util.toFilm
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchFragment : Fragment(), SearchAdapter.OnSearchResultClickListener {
@@ -50,20 +52,16 @@ class SearchFragment : Fragment(), SearchAdapter.OnSearchResultClickListener {
         val itemDecoration: RecyclerView.ItemDecoration =
             DividerItemDecoration(requireContext(), LinearLayout.VERTICAL)
         searchViewModel.searchResultMutableLiveData.observe(viewLifecycleOwner) { searchResult ->
-            if (searchResult != null) {
-                if (searchResult.results != null && searchResult.results!!.isEmpty()) {
-                    binding.searchResults.visibility = View.GONE
-                    binding.noResultsLayout.visibility = View.VISIBLE
-                } else {
-                    binding.searchResults.visibility = View.VISIBLE
-                    binding.noResultsLayout.visibility = View.GONE
-                }
-                foundFilms.clear()
-                searchResult.results?.map {
-                    it.toFilm()
-                }?.let { foundFilms.addAll(it) }
-                adapter.notifyDataSetChanged()
+            if (searchResult != null && searchResult.isEmpty()) {
+                binding.searchResults.visibility = View.GONE
+                binding.noResultsLayout.visibility = View.VISIBLE
+            } else {
+                binding.searchResults.visibility = View.VISIBLE
+                binding.noResultsLayout.visibility = View.GONE
             }
+            foundFilms.clear()
+            foundFilms.addAll(searchResult)
+            adapter.notifyDataSetChanged()
         }
         binding.backButton.setOnClickListener { v -> closeFragment() }
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -110,4 +108,3 @@ class SearchFragment : Fragment(), SearchAdapter.OnSearchResultClickListener {
         Navigation.findNavController(binding.root).navigate(action)
     }
 }
-

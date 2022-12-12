@@ -1,6 +1,5 @@
 package com.example.wovie.ui.bookmarks
 
-
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,13 +14,10 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
 @HiltViewModel
 class BookmarksViewModel @Inject constructor(
-
     private val bookmarkRepository: BookmarkRepository,
     private val apiService: ApiService
-
 ) : ViewModel() {
     val msg = MutableLiveData<String>()
     val loading = MutableLiveData<Boolean>()
@@ -31,10 +27,8 @@ class BookmarksViewModel @Inject constructor(
         getData()
     }
 
-
     fun setBookMarkStatus(film: Film) {
         film.isBookmarked = !film.isBookmarked
-        loading.postValue(true)
         viewModelScope.launch {
             try {
                 if (film.isBookmarked) {
@@ -44,8 +38,6 @@ class BookmarksViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 msg.postValue("operation failed")
-            } finally {
-                loading.postValue(false)
             }
         }
     }

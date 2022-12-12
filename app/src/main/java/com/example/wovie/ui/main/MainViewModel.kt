@@ -27,6 +27,7 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
     val msg = MutableLiveData<String>()
     val loading = MutableLiveData<Boolean>()
+
     val popularMutableLiveData = MutableLiveData<List<Film>>()
     val nowPlayingMutableLiveData = MutableLiveData<List<Film>>()
     val topRatedMutableLiveData = MutableLiveData<List<Film>>()
@@ -74,6 +75,7 @@ class MainViewModel @Inject constructor(
                     } catch (exception: Exception) {
                         Log.i("popular exeception", exception.message.toString())
                     }
+
                     loading.postValue(false)
                 }
             }
@@ -84,12 +86,13 @@ class MainViewModel @Inject constructor(
             catch (exception :Exception){
                 Log.i("error",exception.message.toString())
             }
+
         }
+
     }
 
     fun setBookMarkStatus(film: Film) {
         film.isBookmarked = !film.isBookmarked
-        loading.postValue(true)
         viewModelScope.launch {
             try {
                 if (film.isBookmarked) {
@@ -99,8 +102,6 @@ class MainViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 msg.postValue("operation failed")
-            } finally {
-                loading.postValue(false)
             }
         }
     }
