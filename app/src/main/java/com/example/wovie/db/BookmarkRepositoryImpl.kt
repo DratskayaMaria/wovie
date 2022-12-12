@@ -12,10 +12,10 @@ class BookmarkRepositoryImpl @Inject constructor(database: DatabaseService) : Bo
 
     override suspend fun deleteBookmarkedMovie(id: Int) {
         val bookmark = dao.getBookmark(id)
-        dao.delete(bookmark)
+        bookmark?.let { dao.delete(bookmark) }
     }
 
-    override suspend fun findMovieById(id: Int): BookmarkEntity {
+    override suspend fun findMovieById(id: Int): BookmarkEntity? {
         return dao.getBookmark(id)
     }
 

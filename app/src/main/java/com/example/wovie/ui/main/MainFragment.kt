@@ -23,10 +23,12 @@ class MainFragment : Fragment(), OnBookmarkClickListener {
     private lateinit var popularAdapter: MainAdapter
     private lateinit var topRatedAdapter: MainAdapter
     private lateinit var upcomingAdapter: MainAdapter
+
     private lateinit var nowPlayingList: MutableList<Film>
     private lateinit var popularList: MutableList<Film>
     private lateinit var topRatedList: MutableList<Film>
     private lateinit var upcomingList: MutableList<Film>
+
     private var _binding: FragmentMainBinding? = null
     val binding: FragmentMainBinding
         get() = _binding!!
@@ -64,16 +66,16 @@ class MainFragment : Fragment(), OnBookmarkClickListener {
         binding.upcomingRecyclerview.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
-
-        nowPlayingAdapter = MainAdapter(nowPlayingList, viewModel, requireContext(), this)
-        popularAdapter = MainAdapter(popularList, viewModel, requireContext(), this)
-        topRatedAdapter = MainAdapter(topRatedList, viewModel, requireContext(), this)
-        upcomingAdapter = MainAdapter(upcomingList, viewModel, requireContext(), this)
+        nowPlayingAdapter = MainAdapter(nowPlayingList, viewModel, this)
+        popularAdapter = MainAdapter(popularList, viewModel, this)
+        topRatedAdapter = MainAdapter(topRatedList, viewModel, this)
+        upcomingAdapter = MainAdapter(upcomingList, viewModel, this)
 
         binding.nowPlayingRecyclerview.adapter = nowPlayingAdapter
         binding.popularRecyclerview.adapter = popularAdapter
         binding.topRatedRecyclerview.adapter = topRatedAdapter
         binding.upcomingRecyclerview.adapter = upcomingAdapter
+
         binding.nowPlayingRecyclerview.isNestedScrollingEnabled = false
         binding.popularRecyclerview.isNestedScrollingEnabled = false
         binding.topRatedRecyclerview.isNestedScrollingEnabled = false
@@ -90,6 +92,7 @@ class MainFragment : Fragment(), OnBookmarkClickListener {
             nowPlayingList.addAll(films)
             nowPlayingAdapter.notifyDataSetChanged()
             binding.homeScroll.isVisible = nowPlayingList.size != 0
+            binding.nowPlaying.isVisible = nowPlayingList.size != 0
             binding.noResultsLayout.isVisible = nowPlayingList.size == 0
         }
         viewModel.popularMutableLiveData.observe(viewLifecycleOwner) { films ->
@@ -97,6 +100,7 @@ class MainFragment : Fragment(), OnBookmarkClickListener {
             popularList.addAll(films)
             popularAdapter.notifyDataSetChanged()
             binding.homeScroll.isVisible = popularList.size != 0
+            binding.popular.isVisible = popularList.size != 0
             binding.noResultsLayout.isVisible = popularList.size == 0
         }
         viewModel.topRatedMutableLiveData.observe(viewLifecycleOwner) { films ->
@@ -104,6 +108,7 @@ class MainFragment : Fragment(), OnBookmarkClickListener {
             topRatedList.addAll(films)
             topRatedAdapter.notifyDataSetChanged()
             binding.homeScroll.isVisible = topRatedList.size != 0
+            binding.topRated.isVisible = topRatedList.size != 0
             binding.noResultsLayout.isVisible = topRatedList.size == 0
         }
         viewModel.upcomingMutableLiveData.observe(viewLifecycleOwner) { films ->
@@ -111,6 +116,7 @@ class MainFragment : Fragment(), OnBookmarkClickListener {
             upcomingList.addAll(films)
             upcomingAdapter.notifyDataSetChanged()
             binding.homeScroll.isVisible = upcomingList.size != 0
+            binding.upcoming.isVisible = upcomingList.size != 0
             binding.noResultsLayout.isVisible = upcomingList.size == 0
         }
         binding.bookMarks.setOnClickListener {
@@ -118,9 +124,11 @@ class MainFragment : Fragment(), OnBookmarkClickListener {
             Navigation.findNavController(binding.root).navigate(action)
         }
         binding.retryButton.setOnClickListener { viewModel.getFilms() }
-        viewModel.loading.observe(viewLifecycleOwner, {
-            binding.progressbar.isVisible = it != null && it
-            binding.homeScroll.isVisible = !it
+        viewModel.loading.observe(viewLifecycleOwner, { isLoading ->
+            binding.progressbar.isVisible = isLoading
+
+            binding.homeScroll.isVisible = !isLoading
+
         })
         viewModel.msg.observe(viewLifecycleOwner, {
             if (it != null) {

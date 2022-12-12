@@ -4,16 +4,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wovie.api.ApiService
+import com.example.wovie.api.response.FilmResponse
 import com.example.wovie.api.response.SearchResponse
+import com.example.wovie.db.BookmarkRepository
+import com.example.wovie.ui.model.Film
+import com.example.wovie.util.toFilm
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val bookmarkRepository: BookmarkRepository
 ) : ViewModel() {
-    val searchResultMutableLiveData = MutableLiveData<SearchResponse?>()
+    val searchResultMutableLiveData = MutableLiveData<List<Film>>()
     val msg = MutableLiveData<String>()
     val loading = MutableLiveData<Boolean>()
 
@@ -26,10 +32,20 @@ class SearchViewModel @Inject constructor(
             viewModelScope.launch {
                 loading.postValue(true)
                 try {
-                    val res = apiService.getSearchResults(query)
-                    searchResultMutableLiveData.postValue(res)
+                    var searchResults: SearchResponse? = null
+                    var bookmarkedMovies: List<Int> = mutableListOf()
+                    val asyncRes = async {
+                        searchResults = apiService.getSearchResults(query)
+                        bookmarkedMovies = bookmarkRepository.getAllBookmarks().map { it.movieId }
+                    }
+                    asyncRes.await().let {
+                        searchResultMutableLiveData.postValue(searchResults?.results?.map { response ->
+                            response.toFilm(bookmarkedMovies.contains(response.id))
+                        })
+                    }
+
                 } catch (exception: Exception) {
-                    searchResultMutableLiveData.postValue(SearchResponse())
+                    searchResultMutableLiveData.postValue(mutableListOf())
                     msg.postValue("Something went wrong")
                 } finally {
                     loading.postValue(false)
