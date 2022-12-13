@@ -26,7 +26,7 @@ class FilmViewHolder(
                 ContextCompat.getDrawable(binding.bookMark.context, R.drawable.empty_bookmark)
             )
         }
-        binding.rating.text = film.rating.toString()
+        binding.rating.text = film.rating.toString().substring(0, 3)
 
         binding.poster.setOnClickListener {
             val position = absoluteAdapterPosition

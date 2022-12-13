@@ -34,6 +34,7 @@ class BookmarksAdapter(
                 if (film != null) {
                     bookmarkedFilms[position] = film
                     viewModel.setBookMarkStatus(film)
+                    film.isBookmarked = !film.isBookmarked
                     notifyItemChanged(position)
                 }
             }

@@ -15,10 +15,10 @@
     <string name="dash">-</string>
     <string name="biography">Biography</string>
     <string name="search">Search</string>
-    <string name="no_search_results_ntry_another">No search results\nTry another</string>
+    <string name="no_search_results">No search results</string>
     <string name="bookmarks">Bookmarks</string>
-    <string name="delete_all">Delete All</string>
-    <string name="no_bookmarks_found_nplease_bookmark">No bookmarks found\nplease Bookmark</string>
+    <string name="delete_all">Delete all</string>
+    <string name="no_bookmarks_found">No bookmarks found</string>
     <string name="actors_title">Actors</string>
     <string name="recommended_title">Recommended</string>
 </resources>

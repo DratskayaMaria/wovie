@@ -28,9 +28,7 @@ class MainAdapter(
 
             override fun onBookMarkClicked(film: Film?, position: Int) {
                 if (film != null) {
-                    films[position] = film
                     viewModel.setBookMarkStatus(film)
-                    notifyItemChanged(position)
                     onBookmarkClickListener.setBookmarkedForFilm(film.filmId)
                 }
             }

@@ -5,9 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="8dp"
     tools:text="ACTION"
-    android:textSize="12sp"
+    android:textSize="14sp"
     android:gravity="center"
     android:layout_margin="4dp"
+    android:background="@drawable/genre_bg"
     android:id="@+id/genre_text">
 
 </TextView>
