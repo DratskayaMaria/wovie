@@ -140,28 +140,28 @@ class MainFragment : Fragment(), OnBookmarkClickListener {
     override fun setBookmarkedForFilm(id: Int) {
         nowPlayingList.map {
             if (it.filmId == id) {
-                it.isBookmarked = true
+                it.isBookmarked = !it.isBookmarked
             }
         }
         nowPlayingAdapter.notifyDataSetChanged()
 
         popularList.map {
             if (it.filmId == id) {
-                it.isBookmarked = true
+                it.isBookmarked = !it.isBookmarked
             }
         }
         popularAdapter.notifyDataSetChanged()
 
         topRatedList.map {
             if (it.filmId == id) {
-                it.isBookmarked = true
+                it.isBookmarked = !it.isBookmarked
             }
         }
         topRatedAdapter.notifyDataSetChanged()
 
         upcomingList.map {
             if (it.filmId == id) {
-                it.isBookmarked = true
+                it.isBookmarked = !it.isBookmarked
             }
         }
         upcomingAdapter.notifyDataSetChanged()

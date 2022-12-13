@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="90dp"
-    android:layout_height="120dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
     app:cardCornerRadius="10dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginEnd="8dp"
-    app:cardElevation="0dp">
+    app:cardElevation="2dp">
+
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/light_gray"
         android:orientation="vertical">
+
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toTopOf="parent">
+
             <ImageView
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:id="@+id/poster"
-                android:src="@drawable/warning_sign"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="140dp"
+                android:layout_height="200dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                />
+                android:src="@drawable/warning_sign"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="60dp"
+                android:background="@drawable/gradientup"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
+
             <ImageView
                 android:id="@+id/book_mark"
                 android:layout_width="wrap_content"
@@ -44,12 +49,14 @@
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
+
             <LinearLayout
                 android:layout_width="60dp"
                 android:layout_height="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/rating_bg"/>
             <TextView
                 android:id="@+id/rating"
                 android:layout_width="wrap_content"
@@ -57,25 +64,28 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="20dp"
                 app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@color/dark_gray"
                 android:textSize="12sp"
                 tools:text="8.5"
                 android:padding="8dp"
                 android:gravity="center"
                 android:drawablePadding="4dp"
                 app:drawableStartCompat="@drawable/star" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textAlignment="textStart"
-            tools:text="Taxi"
+            android:paddingHorizontal="8dp"
+            android:layout_marginVertical="8dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp"
-            />
+            android:textAlignment="textStart"
+            android:textColor="@color/dark_gray"
+            android:textSize="12sp"
+            tools:text="wwerwerwerewrwerewrwerewrwrwe" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

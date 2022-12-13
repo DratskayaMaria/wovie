@@ -8,7 +8,11 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import com.example.wovie.databinding.FragmentActorBinding
+import com.example.wovie.databinding.FragmentMainBinding
+import com.example.wovie.ui.film.FilmFragmentArgs
+import com.example.wovie.ui.main.MainViewModel
 import com.example.wovie.util.loadImage
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,9 +31,11 @@ class ActorFragment : Fragment() {
         _binding = FragmentActorBinding.inflate(inflater, container, false)
         val actorId = ActorFragmentArgs.fromBundle(requireArguments()).result
         viewModel.getActorInfo(actorId)
-
+        binding.backButton.setOnClickListener {
+            closeFragment()
+        }
         viewModel.actor.observe(viewLifecycleOwner) { actor ->
-            actor.photo?.let { loadImage(requireContext(), it, binding.actorPicture) }
+            actor.photo?.let { loadImage(requireContext(), it, binding.posterImage) }
             binding.name.text = actor.name
             if (actor.dateBirth != null) {
                 binding.birthYear.text = actor.dateBirth
@@ -41,10 +47,10 @@ class ActorFragment : Fragment() {
             if (actor.dateDeath != null) {
                 binding.deathYear.text = actor.dateDeath
             }
-            if (actor.bio == null) {
-                binding.biographyTitle.isVisible = false
+            if (actor.bio.isNullOrEmpty()) {
                 binding.biography.isVisible = false
             } else {
+                binding.biographyTitle.visibility = View.VISIBLE
                 binding.biography.text = actor.bio
             }
         }
@@ -55,5 +61,9 @@ class ActorFragment : Fragment() {
             }
         })
         return binding.root
+    }
+
+    private fun closeFragment() {
+        Navigation.findNavController(binding.root).popBackStack()
     }
 }

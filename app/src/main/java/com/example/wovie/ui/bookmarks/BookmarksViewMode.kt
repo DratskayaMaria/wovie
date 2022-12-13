@@ -28,7 +28,6 @@ class BookmarksViewModel @Inject constructor(
     }
 
     fun setBookMarkStatus(film: Film) {
-        film.isBookmarked = !film.isBookmarked
         viewModelScope.launch {
             try {
                 if (film.isBookmarked) {
@@ -37,6 +36,7 @@ class BookmarksViewModel @Inject constructor(
                     bookmarkRepository.deleteBookmarkedMovie(film.filmId)
                 }
             } catch (e: Exception) {
+                Log.e("set bookmark", "setBookMarkStatus ${film.isBookmarked}: ${e.message}", )
                 msg.postValue("operation failed")
             }
         }
@@ -54,7 +54,7 @@ class BookmarksViewModel @Inject constructor(
                     }
                 }
             } catch (e: Exception) {
-                Log.i("clear bookmarks error", e.message.toString())
+                Log.e("clear bookmarks error", e.message.toString())
                 msg.postValue("something went wrong")
             }
         }

@@ -64,6 +64,7 @@ class SearchFragment : Fragment(), SearchAdapter.OnSearchResultClickListener {
             adapter.notifyDataSetChanged()
         }
         binding.backButton.setOnClickListener { v -> closeFragment() }
+        binding.searchView.isIconified = false
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.searchView.clearFocus()
@@ -108,3 +109,4 @@ class SearchFragment : Fragment(), SearchAdapter.OnSearchResultClickListener {
         Navigation.findNavController(binding.root).navigate(action)
     }
 }
+

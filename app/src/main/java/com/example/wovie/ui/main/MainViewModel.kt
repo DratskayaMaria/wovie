@@ -92,7 +92,6 @@ class MainViewModel @Inject constructor(
     }
 
     fun setBookMarkStatus(film: Film) {
-        film.isBookmarked = !film.isBookmarked
         viewModelScope.launch {
             try {
                 if (film.isBookmarked) {
@@ -101,6 +100,7 @@ class MainViewModel @Inject constructor(
                     bookmarkRepository.deleteBookmarkedMovie(film.filmId)
                 }
             } catch (e: Exception) {
+                Log.i("bookmark", e.message.toString())
                 msg.postValue("operation failed")
             }
         }

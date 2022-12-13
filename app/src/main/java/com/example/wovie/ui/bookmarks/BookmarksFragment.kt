@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.wovie.databinding.FragmentBookmarksBinding
 import com.example.wovie.ui.model.Film
@@ -37,11 +38,12 @@ class BookmarksFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentBookmarksBinding.inflate(inflater, container, false)
-        val lm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        val lm = StaggeredGridLayoutManager(3, GridLayoutManager.VERTICAL)
+
         bookMarkAdapter = BookmarksAdapter(bookMarksList, bookMarkViewModel, requireContext())
         binding.bookmarksRecyclerview.layoutManager = lm
         binding.bookmarksRecyclerview.adapter = bookMarkAdapter
-        binding.clearAll.setOnClickListener { v ->
+        binding.deleteIcon.setOnClickListener { v ->
             val alertDialog =
                 AlertDialog.Builder(requireContext())
             alertDialog.setTitle("Please Confirm")
@@ -64,7 +66,7 @@ class BookmarksFragment : Fragment() {
             bookMarksList.addAll(results)
             bookMarkAdapter.notifyDataSetChanged()
             val flag = bookMarksList.size == 0
-            binding.clearAll.isVisible = !flag
+            binding.deleteIcon.isVisible = !flag
             binding.bookmarksRecyclerview.isVisible = !flag
             binding.noBookmarksLayout.isVisible = flag
 
@@ -76,7 +78,6 @@ class BookmarksFragment : Fragment() {
         })
         bookMarkViewModel.loading.observe(viewLifecycleOwner, {
             binding.progressbar.isVisible = it != null && it
-
         })
         return binding.root
     }
