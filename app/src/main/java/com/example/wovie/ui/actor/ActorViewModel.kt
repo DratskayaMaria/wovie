@@ -18,9 +18,11 @@ class ActorViewModel @Inject constructor(
 
     val actor = MutableLiveData<Actor>()
     val msg = MutableLiveData<String>()
+    val loading = MutableLiveData<Boolean>()
 
     fun getActorInfo(personId: Int) {
         viewModelScope.launch {
+            loading.postValue(true)
             try {
                 val resp = apiService.getActorById(personId)
                 resp?.let {
@@ -30,6 +32,7 @@ class ActorViewModel @Inject constructor(
                 val e = exception
                 msg.postValue("Something went wrong")
             }
+            loading.postValue(false)
         }
     }
 }

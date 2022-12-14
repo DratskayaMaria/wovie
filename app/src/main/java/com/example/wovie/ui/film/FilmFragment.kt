@@ -12,7 +12,6 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wovie.R
 import com.example.wovie.databinding.FragmentFilmBinding
-import com.example.wovie.ui.main.MainAdapter
 import com.example.wovie.ui.model.Actor
 import com.example.wovie.ui.model.Film
 import com.example.wovie.util.loadImage
@@ -70,7 +69,10 @@ class FilmFragment : Fragment() {
         filmViewModel.getGenresList()
         filmViewModel.getCast(film.filmId)
         filmViewModel.getRecommendedList(film.filmId)
-
+        filmViewModel.loading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressbar.isVisible = isLoading
+            binding.filmInfo.isVisible = !isLoading
+        }
         filmViewModel.genres.observe(viewLifecycleOwner) { responseGenres ->
             film.genres?.map { filmGenreId ->
                 val genre = responseGenres?.first { it.id == filmGenreId }?.name!!
