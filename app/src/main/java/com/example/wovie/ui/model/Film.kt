@@ -13,5 +13,6 @@ data class Film (
     val countFeedbacks: Int,
     val description: String,
     val title: String,
+    val date: String?,
     var isBookmarked: Boolean = false
 ) : Parcelable

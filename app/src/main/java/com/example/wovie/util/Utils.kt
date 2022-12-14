@@ -27,7 +27,8 @@ fun FilmResponse.toFilm(isBookmarked: Boolean = false): Film = Film(
     countFeedbacks = this.vote_count,
     description = this.overview,
     title = this.title,
-    isBookmarked = isBookmarked
+    date = release_date,
+    isBookmarked = isBookmarked,
 )
 
 fun ActorResponse.toActor(): Actor = Actor(
