@@ -83,7 +83,7 @@ class FilmFragment : Fragment() {
             binding.generesRecyclerview.adapter = adapter
             film.cover?.let { loadImage(requireContext(), it, binding.coverImage) }
             film.poster?.let { loadImage(requireContext(), it, binding.posterImage) }
-            binding.rating.text = film.rating.toString()
+            binding.rating.text = film.rating.toString().substring(0, 3)
             binding.topTitle.text = film.title
             binding.overview.text = film.description
             binding.voters.text = film.countFeedbacks.toString()

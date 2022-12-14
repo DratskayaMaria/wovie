@@ -1,6 +1,5 @@
 package com.example.wovie.ui.main
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.NavDirections
