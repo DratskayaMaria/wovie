@@ -10,9 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.example.wovie.databinding.FragmentActorBinding
-import com.example.wovie.databinding.FragmentMainBinding
-import com.example.wovie.ui.film.FilmFragmentArgs
-import com.example.wovie.ui.main.MainViewModel
 import com.example.wovie.util.loadImage
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,6 +30,10 @@ class ActorFragment : Fragment() {
         viewModel.getActorInfo(actorId)
         binding.backButton.setOnClickListener {
             closeFragment()
+        }
+        viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressbar.isVisible = isLoading
+            binding.actorInfo.isVisible = !isLoading
         }
         viewModel.actor.observe(viewLifecycleOwner) { actor ->
             actor.photo?.let { loadImage(requireContext(), it, binding.posterImage) }

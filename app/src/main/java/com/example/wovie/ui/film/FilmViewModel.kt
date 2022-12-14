@@ -21,7 +21,7 @@ class FilmViewModel @Inject constructor(
 ) : ViewModel() {
     val genres = MutableLiveData<List<Genre>?>()
     val msg = MutableLiveData<String>()
-
+    val loading = MutableLiveData<Boolean>()
     val actors = MutableLiveData<List<Actor>>()
 
     val recommended = MutableLiveData<List<Film>>()
@@ -34,12 +34,14 @@ class FilmViewModel @Inject constructor(
 
     fun getGenresList() {
         viewModelScope.launch {
+            loading.postValue(true)
             try {
                 val res = apiService.getGenres()
                 genres.postValue(res?.genres)
             } catch (exception: Exception) {
                 msg.postValue("Something went wrong")
             }
+            loading.postValue(false)
         }
     }
 
