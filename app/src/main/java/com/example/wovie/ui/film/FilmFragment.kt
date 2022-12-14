@@ -87,6 +87,7 @@ class FilmFragment : Fragment() {
             binding.topTitle.text = film.title
             binding.overview.text = film.description
             binding.voters.text = film.countFeedbacks.toString()
+            binding.date.text = film.date
             val layoutManager = FlexboxLayoutManager(requireContext())
             layoutManager.flexDirection = FlexDirection.ROW
             layoutManager.justifyContent = JustifyContent.FLEX_START
