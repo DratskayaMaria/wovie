@@ -81,7 +81,12 @@ class FilmFragment : Fragment() {
             }
             val adapter = genres?.let { GenreAdapter(it) }
             binding.generesRecyclerview.adapter = adapter
-            film.cover?.let { loadImage(requireContext(), it, binding.coverImage) }
+            val cover = film.cover
+            if (cover != null) {
+                loadImage(requireContext(), cover, binding.coverImage)
+            } else {
+                binding.coverImage.isVisible = false
+            }
             film.poster?.let { loadImage(requireContext(), it, binding.posterImage) }
             binding.rating.text = film.rating.toString()
             binding.topTitle.text = film.title
