@@ -12,6 +12,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wovie.R
 import com.example.wovie.databinding.FragmentFilmBinding
+import com.example.wovie.ui.main.MainAdapter
 import com.example.wovie.ui.model.Actor
 import com.example.wovie.ui.model.Film
 import com.example.wovie.util.loadImage
@@ -92,7 +93,12 @@ class FilmFragment : Fragment() {
             film.poster?.let { loadImage(requireContext(), it, binding.posterImage) }
             binding.rating.text = film.rating.toString().substring(0, 3)
             binding.topTitle.text = film.title
-            binding.overview.text = film.description
+            if (film.description.isEmpty()) {
+                binding.overview.isVisible = false
+                binding.overviewHeading.isVisible = false
+            } else {
+                binding.overview.text = film.description
+            }
             binding.voters.text = film.countFeedbacks.toString()
             binding.date.text = film.date
             val layoutManager = FlexboxLayoutManager(requireContext())
