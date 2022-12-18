@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wovie.api.ApiService
 import com.example.wovie.api.response.Genre
+import com.example.wovie.api.response.RecommendedResponse
 import com.example.wovie.db.BookmarkRepository
 import com.example.wovie.ui.model.Actor
 import com.example.wovie.ui.model.Film
@@ -12,6 +13,7 @@ import com.example.wovie.util.toActor
 import com.example.wovie.util.toFilm
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -25,12 +27,6 @@ class FilmViewModel @Inject constructor(
     val actors = MutableLiveData<List<Actor>>()
 
     val recommended = MutableLiveData<List<Film>>()
-
-    fun isFilmBookmarked(movieId: Int) {
-        viewModelScope.launch {
-            bookmarkRepository.findMovieById(movieId)
-        }
-    }
 
     fun getGenresList() {
         viewModelScope.launch {
@@ -64,12 +60,17 @@ class FilmViewModel @Inject constructor(
     fun getRecommendedList(movieId: Int) {
         viewModelScope.launch {
             try {
-                val res = apiService.getRecommendedByMovie(movieId)
-                val list = mutableListOf<Film>()
-                res?.results?.forEach { response ->
-                    list.add(response.toFilm())
+                var recomResp: RecommendedResponse? = null
+                var bookmarkedMovies: List<Int> = mutableListOf()
+                val resp = async {
+                    recomResp = apiService.getRecommendedByMovie(movieId)
+                    bookmarkedMovies = bookmarkRepository.getAllBookmarks().map { it.movieId }
                 }
-                recommended.postValue(list)
+                resp.await().let {
+                    recommended.postValue(recomResp?.results?.map { response ->
+                        response.toFilm(bookmarkedMovies.contains(response.id))
+                    })
+                }
             } catch (exception: Exception) {
                 val e = exception
                 msg.postValue("Something went wrong")
