@@ -30,7 +30,7 @@ class BookmarksViewModel @Inject constructor(
     fun setBookMarkStatus(film: Film) {
         viewModelScope.launch {
             try {
-                if (film.isBookmarked) {
+                if (!film.isBookmarked) {
                     bookmarkRepository.insertBookmarkedMovie(film.filmId)
                 } else {
                     bookmarkRepository.deleteBookmarkedMovie(film.filmId)
