@@ -33,11 +33,6 @@ class MainViewModel @Inject constructor(
     val topRatedMutableLiveData = MutableLiveData<List<Film>>()
     val upcomingMutableLiveData = MutableLiveData<List<Film>>()
 
-    init {
-        getFilms()
-        loading.postValue(false)
-    }
-
     fun getFilms() {
         viewModelScope.launch {
             try {

@@ -23,10 +23,6 @@ class BookmarksViewModel @Inject constructor(
     val loading = MutableLiveData<Boolean>()
     val bookMarkResults = MutableLiveData<List<Film>>()
 
-    init {
-        getData()
-    }
-
     fun setBookMarkStatus(film: Film) {
         viewModelScope.launch {
             try {
@@ -60,7 +56,7 @@ class BookmarksViewModel @Inject constructor(
         }
     }
 
-    private fun getData() {
+    public fun getData() {
         viewModelScope.launch {
             delay(1000)
             loading.postValue(true)

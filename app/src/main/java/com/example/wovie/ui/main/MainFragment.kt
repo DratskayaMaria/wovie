@@ -54,6 +54,7 @@ class MainFragment : Fragment(), OnBookmarkClickListener {
     override fun onStart() {
         super.onStart()
         viewModel.getFilms()
+        viewModel.loading.postValue(true)
     }
 
     private fun initRootView() {
