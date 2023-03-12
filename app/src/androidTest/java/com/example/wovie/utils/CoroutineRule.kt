@@ -1,4 +1,4 @@
-package com.example.wovie
+package com.example.wovie.utils
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
