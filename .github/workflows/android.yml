@@ -78,23 +78,14 @@ jobs:
           emulator-build: 7425822
           script: ./gradlew connectedCheck --stacktrace
           
-      - name: Upload Test Reports Folder
-        uses: actions/upload-artifact@v2
-        if: ${{ always() }} # IMPORTANT: Upload reports regardless of status
-        with:
-          name: reports
-          path: app/build/test-results # path to where the xml test results are stored
-        
-  report:
-    runs-on: ubuntu-latest
-    needs: tests # The report job will run after test job
-    if: ${{ always() }} # IMPORTANT: Execute report job regardless of status
-    steps:
-      - name: Download Test Reports Folder
-        uses: actions/download-artifact@v2
-        with:
-          name: reports
-          
-      - name: Android Test Report
-        uses: asadmansr/android-test-report-action@v1.2.0
+  integration_test:
+   executor:
+     name: android/android-machine
+     resource-class: xlarge
+     tag: 2022.09.1
+   steps:
+     - checkout
+     - android/start-emulator-and-run-tests
+     - store_test_results:
+         path: ./app/build/outputs/androidTest-results/connected
       
