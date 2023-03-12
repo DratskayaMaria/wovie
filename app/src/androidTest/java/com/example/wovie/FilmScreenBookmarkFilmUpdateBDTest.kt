@@ -8,6 +8,7 @@ import com.example.wovie.db.BookmarkRepositoryImpl
 import com.example.wovie.db.DatabaseService
 import com.example.wovie.ui.film.FilmViewModel
 import com.example.wovie.ui.model.Film
+import com.example.wovie.utils.CoroutineRule
 import java.io.IOException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher

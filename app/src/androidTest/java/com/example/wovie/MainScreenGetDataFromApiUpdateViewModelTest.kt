@@ -10,16 +10,12 @@ import com.example.wovie.db.BookmarkRepository
 import com.example.wovie.db.BookmarkRepositoryImpl
 import com.example.wovie.db.DatabaseService
 import com.example.wovie.ui.main.MainViewModel
-import com.example.wovie.ui.model.Film
-import com.example.wovie.util.toFilm
 import com.example.wovie.utils.CoroutineRule
 import com.example.wovie.utils.getOrAwaitValue
-import java.io.IOException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
