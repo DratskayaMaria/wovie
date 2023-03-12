@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 defaults:
   run:
-    working-directory: app
+    working-directory: wovie
 
 jobs:
   build:
@@ -49,7 +49,7 @@ jobs:
           api-level: 29
           profile: Nexus 6
           arch: x86_64
-          working-directory: app
+          working-directory: wovie
           script: ./gradlew connectedAndroidTest
           
       - name: Upload Test Reports Folder
