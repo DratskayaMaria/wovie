@@ -77,3 +77,17 @@ jobs:
           api-level: 27
           emulator-build: 7425822
           script: ./gradlew connectedCheck --stacktrace
+          
+      - name: Test Summary
+        uses: test-summary/action@v2
+        with:
+          paths: "test/results/**/TEST-*.xml"
+          output: test-summary.md
+        if: always()
+
+      - name: Upload test summary
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-summary
+          path: test-summary.md
+        if: always()
