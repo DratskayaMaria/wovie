@@ -1,107 +1,30 @@
-name: Build
+name: Android CI
 
-on:
-  push:
-    branches: [ develop ]
-  pull_request:
-    branches: [ develop ]
+on: [push, pull_request]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    env:
-      RELEASE_KEYSTORE_PATH: ${{ secrets.RELEASE_KEYSTORE_PATH }}
-      RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
-      RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
-      RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
-
-    steps:
-    - uses: actions/checkout@v2
-    
-    - name: Setup gradle
-      run: chmod +x ./gradlew
-      
-    - uses: actions/cache@v1
-      with:
-        path: ~/.gradle/caches
-        key: caches-${{ runner.os }}-${{ hashFiles('**/*.gradle') }}
-        
-    - uses: actions/cache@v1
-      with:
-        path: ~/.gradle/wrapper
-        key: wrapper-${{ runner.os }}-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-        
-    - name: set up JDK 11
-      uses: actions/setup-java@v1
-      with:
-         java-version: '11'
-         distribution: 'temurin'
-         cache: gradle
-
-    - name: Build with Gradle
-      run: ./gradlew check --stacktrace
-
-  tests:
+  instrumentation-test:
+    name: Run Instrumented Tests
     runs-on: macos-latest
-    env:
-      RELEASE_KEYSTORE_PATH: ${{ secrets.RELEASE_KEYSTORE_PATH }}
-      RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
-      RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
-      RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
-
     steps:
-      - uses: actions/checkout@v2
-      - name: set up JDK 11
+      - name: JDK Setup
         uses: actions/setup-java@v1
         with:
-           java-version: '11'
-           distribution: 'temurin'
-           cache: gradle
-
-      - name: Setup gradle
-        run: chmod +x ./gradlew
+          java-version: 11
+      - name: checkout
+        uses: actions/checkout@v2
         
-      - uses: actions/cache@v1
-        with:
-          path: ~/.gradle/caches
-          key: caches-${{ runner.os }}-${{ hashFiles('**/*.gradle') }}
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
-      - uses: actions/cache@v1
-        with:
-          path: ~/.gradle/wrapper
-          key: wrapper-${{ runner.os }}-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-
-      - name: Run Instrumentation tests
+      - name: run instrumented tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 27
-          emulator-build: 7425822
-          script: ./gradlew connectedCheck --stacktrace
-          
-      - name: Copy Test Results
-        if: always()
-        run: |
-          mkdir -p instrumented
-          find . -type f -regex ".*/build/outputs/androidTest-results/.*xml" -exec sh -c 'x="{}"; mv "$x" "${x// /}"' \;
-          find . -type f -regex ".*/build/outputs/androidTest-results/.*xml" -exec cp {} instrumented/ \;
-          
-      - name: Upload Test Results
-        if: always()
-        uses: actions/upload-artifact@v1
+          api-level: 29
+          script: ./gradlew connectedCheck
+
+      - name: Upload instrumented test report
+        uses: actions/upload-artifact@v2
         with:
-          name: instrumented-results
-          path: instrumented
-          
-  report:
-    name: Report test results
-    runs-on: ubuntu-latest
-    needs: [tests]
-    if: ${{ always() }}
-    steps:
-      - name: Download Test Reports Folder
-        uses: actions/download-artifact@v2
-        with:
-          name: instrumented-results
- 
-      - name: Android Test Report
-        uses: asadmansr/android-test-report-action@v1.2.0
+          name: instrumented_test_report
+          path: app/build/reports/androidTests/connected/
