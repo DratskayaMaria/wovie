@@ -1,14 +1,17 @@
+package com.example.wovie.bookmarks
+
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.wovie.api.ApiService
+import com.example.wovie.api.response.FilmResponse
 import com.example.wovie.db.BookmarkRepository
 import com.example.wovie.db.BookmarkRepositoryImpl
 import com.example.wovie.db.DatabaseService
-import com.example.wovie.ui.main.MainViewModel
-import com.example.wovie.ui.model.Film
+import com.example.wovie.ui.bookmarks.BookmarksViewModel
 import com.example.wovie.utils.CoroutineRule
+import com.example.wovie.utils.getOrAwaitValue
 import java.io.IOException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -21,10 +24,11 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-class MainScreenUnbookmarkFilmUpdateBDTest {
+class BookmarkScreenRequestBookmarkedFilmsUpdateViewModelPropertyTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
@@ -32,17 +36,19 @@ class MainScreenUnbookmarkFilmUpdateBDTest {
     var coroutineRule = CoroutineRule()
 
     private lateinit var bookmarksRepository: BookmarkRepository
-    private lateinit var mainViewModel: MainViewModel
+    private lateinit var bookmarksViewModel: BookmarksViewModel
     private lateinit var db: DatabaseService
-    private val apiService = Mockito.mock(ApiService::class.java)
+    private val apiService = Mockito.spy(ApiService::class.java)
 
-    private val filmMock = getFilmMock()
+    private val bookmarkedFilmsIds = listOf(1, 2, 3, 4)
 
     @Before
     fun before() = runTest(StandardTestDispatcher()) {
         db = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), DatabaseService::class.java).build()
         bookmarksRepository = BookmarkRepositoryImpl(db)
-        mainViewModel = MainViewModel(apiService, bookmarksRepository)
+        bookmarksViewModel = BookmarksViewModel(bookmarksRepository, apiService)
+
+        bookmarkedFilmsIds.forEach { `when`(apiService.getMovieById(it)).thenReturn(getFilmResponseMock(it)) }
 
         addPreparedDataInDB()
         advanceUntilIdle()
@@ -50,10 +56,10 @@ class MainScreenUnbookmarkFilmUpdateBDTest {
 
     @Test
     fun test(): Unit = runTest(StandardTestDispatcher()) {
-        mainViewModel.setBookMarkStatus(filmMock)
+        bookmarksViewModel.getData()
         advanceUntilIdle()
-        val list = bookmarksRepository.getAllBookmarks()
-        Assert.assertEquals(0, list.size)
+        val results = bookmarksViewModel.bookMarkResults.getOrAwaitValue().map { it.filmId }
+        Assert.assertTrue(results == bookmarkedFilmsIds)
     }
 
     @After
@@ -62,24 +68,24 @@ class MainScreenUnbookmarkFilmUpdateBDTest {
         db.close()
     }
 
-    private fun getFilmMock() = Film(
-        FILM_ID,
-        null,
-        null,
-        null,
-        0.0,
-        0,
-        "",
-        "",
-        null,
-        true
-    )
-
-    companion object {
-        private const val FILM_ID = 1
-    }
-
     private suspend fun addPreparedDataInDB() {
-        bookmarksRepository.insertBookmarkedMovie(FILM_ID)
+        bookmarkedFilmsIds.forEach { bookmarksRepository.insertBookmarkedMovie(it) }
     }
+
+    private fun getFilmResponseMock(id: Int) =
+        FilmResponse(
+            backdrop_path = null,
+            genre_ids = listOf(),
+            id = id,
+            original_language = "",
+            original_title = "",
+            overview = "",
+            popularity = 0.0,
+            poster_path = null,
+            title = "",
+            release_date = "",
+            video = false,
+            vote_average = 0.0,
+            vote_count = 0
+        )
 }

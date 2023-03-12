@@ -1,4 +1,4 @@
-package com.example.wovie
+package com.example.wovie.bookmarks
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4

@@ -1,4 +1,4 @@
-package com.example.wovie
+package com.example.wovie.search
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
@@ -29,7 +29,7 @@ import org.mockito.Mockito.`when`
 
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-class SearchScreenGetUnbookmarkedFilmBookmarkEqualsFalseTest {
+class SearchScreenGetBookmarkedFilmBookmarkEqualsTrueTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
@@ -48,6 +48,9 @@ class SearchScreenGetUnbookmarkedFilmBookmarkEqualsFalseTest {
         searchViewModel = SearchViewModel(apiService, bookmarksRepository)
 
         `when`(apiService.getSearchResults(QUERY)).thenReturn(getSearchResponseMock())
+
+        addPreparedDataInDB()
+        advanceUntilIdle()
     }
 
     @Test
@@ -57,7 +60,7 @@ class SearchScreenGetUnbookmarkedFilmBookmarkEqualsFalseTest {
         val result = searchViewModel.searchResultMutableLiveData
             .getOrAwaitValue()
             .first { it.filmId == FILM_ID }
-        Assert.assertFalse(result.isBookmarked)
+        Assert.assertTrue(result.isBookmarked)
     }
 
     @After
@@ -94,6 +97,10 @@ class SearchScreenGetUnbookmarkedFilmBookmarkEqualsFalseTest {
     companion object {
         private const val QUERY = "query"
         private const val FILM_ID = 1
+    }
+
+    private suspend fun addPreparedDataInDB() {
+        bookmarksRepository.insertBookmarkedMovie(FILM_ID)
     }
 
 }
