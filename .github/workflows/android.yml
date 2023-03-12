@@ -1,69 +1,50 @@
-name: Build
+name: Android CI
 
-on:
-  push:
-    branches: [ develop ]
-  pull_request:
-    branches: [ develop ]
+on: [push, pull_request]
+
+defaults:
+  run:
+    working-directory: app
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
-    env:
-      RELEASE_KEYSTORE_PATH: ${{ secrets.RELEASE_KEYSTORE_PATH }}
-      RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
-      RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
-      RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+
 
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: Setup gradle
-      run: chmod +x ./gradlew
+    - uses: actions/checkout@v3
+    - name: set up JDK 
+      uses: actions/setup-java@v3.1.0
+      with:
+        java-version: 11
+        distribution: 'temurin'
+        cache: gradle
+        
+    - name:  Create google-service.json
+      env:
+         GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES }}
+      run: |
+        echo $GOOGLE_SERVICES_JSON >  app/google-services.json
       
-    - uses: actions/cache@v1
-      with:
-        path: ~/.gradle/caches
-        key: caches-${{ runner.os }}-${{ hashFiles('**/*.gradle') }}
-        
-    - uses: actions/cache@v1
-      with:
-        path: ~/.gradle/wrapper
-        key: wrapper-${{ runner.os }}-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-        
-    - name: set up JDK 11
-      uses: actions/setup-java@v1
-      with:
-         java-version: '11'
-         distribution: 'temurin'
-         cache: gradle
-
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./gradlew check --stacktrace
+      run: ./gradlew build
       
+ 
+          
+          
   run-instrumented-tests:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: set up JDK 11
-        uses: actions/setup-java@v1
+      - name: Clone Repo
+        uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3.1.0
         with:
-           java-version: '11'
-           distribution: 'temurin'
-           cache: gradle
-
-      - name: Setup gradle
-        run: chmod +x ./gradlew
-        
-      - uses: actions/cache@v1
-        with:
-          path: ~/.gradle/caches
-          key: caches-${{ runner.os }}-${{ hashFiles('**/*.gradle') }}
-
-      - uses: actions/cache@v1
-        with:
-          path: ~/.gradle/wrapper
-          key: wrapper-${{ runner.os }}-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+          distribution: 'temurin'
+          java-version: '11'
           
       - name:  Create google-service.json
         env:
@@ -88,7 +69,7 @@ jobs:
         if: ${{ always() }} # IMPORTANT: Upload reports regardless of status
         with:
           name: reports
-          path: app/ # path to where the xml test results are stored
+          path: CarEshipApp/ # path to where the xml test results are stored
           
           
   report:
@@ -104,4 +85,3 @@ jobs:
           uses: asadmansr/android-test-report-action@v1.2.0 
           if: ${{ always() }} # IMPORTANT: run Android Test Report regardless
           #Adopted from https://github.com/asadmansr/android-test-report-action-example
-      
