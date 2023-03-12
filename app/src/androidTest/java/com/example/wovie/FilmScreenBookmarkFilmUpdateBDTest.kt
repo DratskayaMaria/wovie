@@ -2,13 +2,12 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.wovie.CoroutineRule
+import com.example.wovie.utils.CoroutineRule
 import com.example.wovie.api.ApiService
 import com.example.wovie.db.BookmarkRepository
 import com.example.wovie.db.BookmarkRepositoryImpl
 import com.example.wovie.db.DatabaseService
 import com.example.wovie.ui.film.FilmViewModel
-import com.example.wovie.ui.main.MainViewModel
 import com.example.wovie.ui.model.Film
 import java.io.IOException
 import kotlinx.coroutines.ExperimentalCoroutinesApi

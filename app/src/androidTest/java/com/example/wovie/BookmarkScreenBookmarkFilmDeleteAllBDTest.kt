@@ -9,6 +9,7 @@ import com.example.wovie.db.BookmarkRepository
 import com.example.wovie.db.BookmarkRepositoryImpl
 import com.example.wovie.db.DatabaseService
 import com.example.wovie.ui.bookmarks.BookmarksViewModel
+import com.example.wovie.utils.CoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
