@@ -24,7 +24,7 @@ import org.mockito.Mockito
 
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-class MainViewModelTest {
+class MainScreenBookmarkFilmUpdateBDTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
