@@ -56,7 +56,7 @@ jobs:
           
           
   report:
-      runs-on: ubuntu-latest
+      runs-on: macos-latest
       needs: run-instrumented-tests # The report job will run after tests job
       if: ${{ always() }} # IMPORTANT: Execute report job regardless of status
       steps:
