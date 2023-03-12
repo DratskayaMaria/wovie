@@ -1,4 +1,4 @@
-package com.example.wovie
+package com.example.wovie.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
