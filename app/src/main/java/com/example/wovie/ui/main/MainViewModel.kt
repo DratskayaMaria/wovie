@@ -11,6 +11,7 @@ import com.example.wovie.api.response.TopRated
 import com.example.wovie.api.response.Upcoming
 import com.example.wovie.db.BookmarkRepository
 import com.example.wovie.ui.model.Film
+import com.example.wovie.util.IdlingResource
 import com.example.wovie.util.toFilm
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.net.UnknownHostException
@@ -34,6 +35,7 @@ class MainViewModel @Inject constructor(
     val upcomingMutableLiveData = MutableLiveData<List<Film>>()
 
     fun getFilms() {
+        IdlingResource.countingIdlingResource.increment()
         viewModelScope.launch {
             try {
                 coroutineScope {
@@ -66,6 +68,7 @@ class MainViewModel @Inject constructor(
                             upcomingMutableLiveData.postValue(upcomingResults?.results?.map { response ->
                                 response.toFilm(bookmarkedMovies.contains(response.id))
                             })
+                            IdlingResource.countingIdlingResource.decrement()
                         }
                     } catch (exception: Exception) {
                         Log.i("popular exeception", exception.message.toString())

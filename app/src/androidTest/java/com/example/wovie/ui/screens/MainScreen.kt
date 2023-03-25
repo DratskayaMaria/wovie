@@ -1,6 +1,7 @@
 package com.example.wovie.ui.screens
 
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.contrib.RecyclerViewActions.scrollToPosition
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
@@ -18,16 +19,18 @@ class MainScreen: BaseScreen() {
     }
 
     fun clickOnSearchOnAppBar(): SearchScreen {
-        TODO()
+        onView(withId(R.id.search_view))
+            .perform(ViewActions.click())
+
+        return SearchScreen()
     }
 
     fun clickOnFirstFilm(): FilmScreen {
         TODO()
     }
 
-    fun waitForLoader(): MainScreen {
+    fun waitForLoader() {
         waitForViewDisplayed(withId(R.id.progressbar), isRoot())
-        return this
     }
 
     fun checkNowPlayingVisible(): MainScreen {
