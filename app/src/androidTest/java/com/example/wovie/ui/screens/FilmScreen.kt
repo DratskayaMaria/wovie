@@ -37,102 +37,119 @@ class FilmScreen {
 
     fun checkFilmName() : FilmScreen {
         Espresso.onView(withId(R.id.top_title))
+            .perform(betterScrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmCover() : FilmScreen {
         Espresso.onView(withId(R.id.cover_image))
+            .perform(betterScrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmPoster() : FilmScreen {
         Espresso.onView(withId(R.id.poster_image))
+            .perform(betterScrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmGenresHeading() : FilmScreen {
         Espresso.onView(withId(R.id.genre_heading))
+            .perform(betterScrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmGenres() : FilmScreen {
         Espresso.onView(withId(R.id.generes_recyclerview))
+            .perform(betterScrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmDateTitle() : FilmScreen {
         Espresso.onView(withId(R.id.date_title))
+            .perform(betterScrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmDate() : FilmScreen {
         Espresso.onView(withId(R.id.date))
+            .perform(betterScrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmRatingHeading() : FilmScreen {
         Espresso.onView(withId(R.id.rating_heading))
+            .perform(betterScrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmRating() : FilmScreen {
         Espresso.onView(withId(R.id.rating))
+            .perform(betterScrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmVotersHeading() : FilmScreen {
         Espresso.onView(withId(R.id.voters_heading))
+            .perform(betterScrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmVoters() : FilmScreen {
         Espresso.onView(withId(R.id.voters))
+            .perform(betterScrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmOverviewHeading() : FilmScreen {
         Espresso.onView(withId(R.id.overview_heading))
+            .perform(betterScrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmOverview() : FilmScreen {
         Espresso.onView(withId(R.id.overview))
+            .perform(betterScrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmActorsTitle() : FilmScreen {
         Espresso.onView(withId(R.id.actors_title))
+            .perform(betterScrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmActorsList() : FilmScreen {
         Espresso.onView(withId(R.id.actors_recycler))
+            .perform(betterScrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmRecommendedTitle() : FilmScreen {
         Espresso.onView(withId(R.id.recommended_title))
+            .perform(betterScrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmRecommendedList() : FilmScreen {
         Espresso.onView(withId(R.id.recommended_recycler))
+            .perform(betterScrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
