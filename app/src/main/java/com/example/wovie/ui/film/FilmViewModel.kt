@@ -9,6 +9,7 @@ import com.example.wovie.api.response.RecommendedResponse
 import com.example.wovie.db.BookmarkRepository
 import com.example.wovie.ui.model.Actor
 import com.example.wovie.ui.model.Film
+import com.example.wovie.util.IdlingResource
 import com.example.wovie.util.toActor
 import com.example.wovie.util.toFilm
 import dagger.hilt.android.lifecycle.HiltViewModel
