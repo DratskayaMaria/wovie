@@ -13,19 +13,21 @@ import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.rule.ActivityTestRule
 import com.example.wovie.R
+import com.example.wovie.ui.MainActivity
 import com.example.wovie.ui.main.FilmViewHolder
 import com.example.wovie.ui.search.SearchViewHolder
 import com.example.wovie.ui.utils.RecyclerViewMatcher
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.Matcher
 
-class SearchScreen {
+class SearchScreen(private val activityRule: ActivityTestRule<MainActivity>) {
     fun clickOnBackButton(): MainScreen {
         Espresso.onView(withId(R.id.back_button))
             .perform(ViewActions.click())
 
-        return MainScreen()
+        return MainScreen(activityRule)
     }
 
     fun checkScreenTitle() : SearchScreen{
@@ -39,7 +41,7 @@ class SearchScreen {
             .perform(
                 RecyclerViewActions
                 .actionOnItemAtPosition<SearchViewHolder>(0, ViewActions.click()))
-        return FilmScreen()
+        return FilmScreen(activityRule)
     }
 
     fun enterSearchRequest(text: String): SearchScreen {

@@ -9,10 +9,10 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.RootMatchers.withDecorView
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
 import com.example.wovie.R
 import com.example.wovie.ui.MainActivity
@@ -21,14 +21,10 @@ import com.example.wovie.ui.utils.RecyclerViewItemCountAssertion
 import com.example.wovie.ui.utils.RecyclerViewMatcher
 import com.example.wovie.ui.utils.withDrawable
 import org.hamcrest.Matcher
+import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.not
 
-class MainScreen() {
-
-    private var activityRule: ActivityTestRule<MainActivity>? = null
-
-    constructor(activityRule: ActivityTestRule<MainActivity>) : this() {
-       this.activityRule = activityRule
-    }
+class MainScreen(private val activityRule: ActivityTestRule<MainActivity>) {
 
     fun getFilmTitleByPos(pos: Int): String? {
         return getRecyclerById(R.id.now_playing_recyclerview)
@@ -50,28 +46,28 @@ class MainScreen() {
     }
 
     private fun getRecyclerById(id: Int): RecyclerView? {
-        return activityRule?.activity?.findViewById(id)
+        return activityRule.activity.findViewById(id)
     }
 
     fun clickOnBookmarkInAppBar(): BookmarksScreen {
         onView(withId(R.id.book_marks))
             .perform(click())
 
-        return BookmarksScreen(activityRule!!)
+        return BookmarksScreen(activityRule)
     }
 
     fun clickOnSearchOnAppBar(): SearchScreen {
         onView(withId(R.id.search_view))
             .perform(ViewActions.click())
 
-        return SearchScreen()
+        return SearchScreen(activityRule)
     }
 
     fun clickOnFirstFilm(): FilmScreen {
         onView(withId(R.id.now_playing_recyclerview))
             .perform(scrollTo())
             .perform(RecyclerViewActions.actionOnItemAtPosition<FilmViewHolder>(0, click()))
-        return FilmScreen()
+        return FilmScreen(activityRule)
     }
 
     fun addFilmInBookmarks(position: Int, isAlreadyBookmarked: Boolean): MainScreen {
@@ -171,7 +167,21 @@ class MainScreen() {
             .check(ViewAssertions.matches(isDisplayed()))
     }
 
+    fun isNoInternetMessageDisplayed() {
+        onView(withText("No internet connection")).inRoot(
+            withDecorView(
+                not(
+                    activityRule?.getActivity()?.getWindow()?.getDecorView()
+                )
+            )
+        )
+            .check(matches(isDisplayed()))
+    }
+
     companion object {
         private const val FILMS_COUNT = 20
     }
+
+
 }
+
