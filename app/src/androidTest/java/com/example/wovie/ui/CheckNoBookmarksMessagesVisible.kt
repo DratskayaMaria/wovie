@@ -17,7 +17,6 @@ import org.junit.runner.RunWith
 class CheckNoBookmarksMessagesVisible {
     @get:Rule var activityRule = ActivityTestRule(MainActivity::class.java)
     val mainScreen = MainScreen(activityRule)
-
     @Before
     fun before() {
         IdlingRegistry.getInstance().register(IdlingResource.countingIdlingResource)

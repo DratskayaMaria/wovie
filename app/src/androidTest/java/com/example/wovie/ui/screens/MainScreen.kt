@@ -50,12 +50,12 @@ class MainScreen() {
     }
 
     private fun getRecyclerById(id: Int): RecyclerView? {
-        return activityRule?.activity?.findViewById<RecyclerView>(id)
+        return activityRule?.activity?.findViewById(id)
     }
 
     fun clickOnBookmarkInAppBar(): BookmarksScreen {
         onView(withId(R.id.book_marks))
-            .perform(ViewActions.click())
+            .perform(click())
 
         return BookmarksScreen(activityRule!!)
     }

@@ -28,6 +28,9 @@ class CheckBookmarkedFilmsTest {
         /*val mainScreen = MainScreen()
         mainScreen
             .addFilmInBookmarks(0)
+            .clickOnBookmarkInAppBar(activityRule)
+            
+            .addFilmInBookmarks(0)
             .clickOnBookmarkInAppBar()*/
 
     }

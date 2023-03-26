@@ -39,6 +39,6 @@ class CheckAddFilmInBookmarksTest {
         mainScreen
             .clickOnBookmarkInAppBar()
             .checkScreenTitle()
-            //.checkFilmExist(bookmarkedFilmTitle)
+            .checkFilmExist(bookmarkedFilmTitle)
     }
 }
