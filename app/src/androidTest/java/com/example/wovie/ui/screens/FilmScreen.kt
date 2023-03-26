@@ -1,12 +1,11 @@
 package com.example.wovie.ui.screens
 
 import androidx.test.espresso.Espresso
-import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.example.wovie.R
 import com.example.wovie.ui.film.ActorCardViewHolder
@@ -17,6 +16,13 @@ import betterScrollTo
 import com.example.wovie.ui.MainActivity
 
 class FilmScreen {
+    fun clickOnBackButton(): MainScreen {
+        Espresso.onView(withId(R.id.back_button))
+            .perform(ViewActions.click())
+
+        return MainScreen()
+    }
+
     fun clickOnBookmark(activityRule: ActivityTestRule<MainActivity>) : BookmarksScreen {
         Espresso.onView(withId(R.id.bookmark))
             .perform(ViewActions.click())
@@ -40,119 +46,118 @@ class FilmScreen {
 
     fun checkFilmName() : FilmScreen {
         Espresso.onView(withId(R.id.top_title))
-            .perform(betterScrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmCover() : FilmScreen {
         Espresso.onView(withId(R.id.cover_image))
-            .perform(betterScrollTo())
+            .perform(scrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmPoster() : FilmScreen {
         Espresso.onView(withId(R.id.poster_image))
-            .perform(betterScrollTo())
+            .perform(scrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmGenresHeading() : FilmScreen {
         Espresso.onView(withId(R.id.genre_heading))
-            .perform(betterScrollTo())
+            .perform(scrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmGenres() : FilmScreen {
         Espresso.onView(withId(R.id.generes_recyclerview))
-            .perform(betterScrollTo())
+            .perform(scrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmDateTitle() : FilmScreen {
         Espresso.onView(withId(R.id.date_title))
-            .perform(betterScrollTo())
+            .perform(scrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmDate() : FilmScreen {
         Espresso.onView(withId(R.id.date))
-            .perform(betterScrollTo())
+            .perform(scrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmRatingHeading() : FilmScreen {
         Espresso.onView(withId(R.id.rating_heading))
-            .perform(betterScrollTo())
+            .perform(scrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmRating() : FilmScreen {
         Espresso.onView(withId(R.id.rating))
-            .perform(betterScrollTo())
+            .perform(scrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmVotersHeading() : FilmScreen {
         Espresso.onView(withId(R.id.voters_heading))
-            .perform(betterScrollTo())
+            .perform(scrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmVoters() : FilmScreen {
         Espresso.onView(withId(R.id.voters))
-            .perform(betterScrollTo())
+            .perform(scrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmOverviewHeading() : FilmScreen {
         Espresso.onView(withId(R.id.overview_heading))
-            .perform(betterScrollTo())
+            .perform(scrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmOverview() : FilmScreen {
         Espresso.onView(withId(R.id.overview))
-            .perform(betterScrollTo())
+            .perform(scrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmActorsTitle() : FilmScreen {
         Espresso.onView(withId(R.id.actors_title))
-            .perform(betterScrollTo())
+            .perform(scrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmActorsList() : FilmScreen {
         Espresso.onView(withId(R.id.actors_recycler))
-            .perform(betterScrollTo())
+            .perform(scrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmRecommendedTitle() : FilmScreen {
         Espresso.onView(withId(R.id.recommended_title))
-            .perform(betterScrollTo())
+            .perform(scrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
 
     fun checkFilmRecommendedList() : FilmScreen {
         Espresso.onView(withId(R.id.recommended_recycler))
-            .perform(betterScrollTo())
+            .perform(scrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }

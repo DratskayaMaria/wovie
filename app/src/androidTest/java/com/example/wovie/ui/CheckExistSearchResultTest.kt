@@ -5,6 +5,7 @@ import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.example.wovie.ui.screens.MainScreen
+import com.example.wovie.ui.screens.SearchScreen
 import com.example.wovie.util.IdlingResource
 import org.junit.After
 import org.junit.Before
@@ -30,10 +31,9 @@ class CheckExistSearchResultTest {
     @Test
     fun checkExistSearchResultTest() {
         val mainScreen = MainScreen()
-        val searchRequest = "The Lion King"
         mainScreen
             .clickOnSearchOnAppBar()
-            .enterSearchRequest(searchRequest)
-            .checkNameOfFirstSearchResult(searchRequest)
+            .enterSearchRequest("Titanic")
+            .checkNameOfFirstSearchResult("Titanic")
     }
 }
