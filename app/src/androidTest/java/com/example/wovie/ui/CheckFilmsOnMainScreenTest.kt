@@ -32,8 +32,12 @@ class CheckFilmsOnMainScreenTest {
         val mainScreen = MainScreen()
         mainScreen
             .checkNowPlayingVisible()
+            .checkCardInNowPlayingContent()
             .checkPopularVisible()
+            .checkCardInPopularContent()
             .checkTopRatedVisible()
+            .checkCardInTopRatedContent()
             .checkUpcomingVisible()
+            .checkCardInUpcomingContent()
     }
 }
