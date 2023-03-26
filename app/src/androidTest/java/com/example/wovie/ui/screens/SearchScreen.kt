@@ -6,6 +6,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -33,7 +34,8 @@ class SearchScreen {
     fun enterSearchRequest(text: String): SearchScreen {
         onView(withId(R.id.search_view))
             .perform(ViewActions.click())
-            .perform(typeSearchViewText(text))
+        onView(withId(R.id.search_src_text))
+            .perform(typeText(text))
         return this
     }
 
@@ -43,20 +45,20 @@ class SearchScreen {
             .check(ViewAssertions.matches(withText(text)))
     }
 
-    private fun typeSearchViewText(text: String): ViewAction {
-        return object : ViewAction {
-            override fun getDescription(): String {
-                return "Change view text"
-            }
-
-            override fun getConstraints(): Matcher<View> {
-                return allOf(isDisplayed(), isAssignableFrom(SearchView::class.java))
-            }
-
-            override fun perform(uiController: UiController?, view: View?) {
-                (view as SearchView).setQuery(text, true)
-            }
-        }
-    }
+//    private fun typeSearchViewText(text: String): ViewAction {
+//        return object : ViewAction {
+//            override fun getDescription(): String {
+//                return "Change view text"
+//            }
+//
+//            override fun getConstraints(): Matcher<View> {
+//                return allOf(isDisplayed(), isAssignableFrom(SearchView::class.java))
+//            }
+//
+//            override fun perform(uiController: UiController?, view: View?) {
+//                (view as SearchView).setQuery(text, true)
+//            }
+//        }
+//    }
 
 }
