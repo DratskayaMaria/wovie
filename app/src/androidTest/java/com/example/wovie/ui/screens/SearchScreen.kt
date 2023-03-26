@@ -1,11 +1,13 @@
 package com.example.wovie.ui.screens
 
+import android.view.KeyEvent
 import android.view.View
 import android.widget.SearchView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.pressKey
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions
@@ -35,7 +37,7 @@ class SearchScreen {
         onView(withId(R.id.search_view))
             .perform(ViewActions.click())
         onView(withId(R.id.search_src_text))
-            .perform(typeText(text))
+            .perform(typeText(text), pressKey(KeyEvent.KEYCODE_ENTER))
         return this
     }
 
