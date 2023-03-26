@@ -6,6 +6,7 @@ import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.example.wovie.R
 import com.example.wovie.ui.film.ActorCardViewHolder
@@ -32,6 +33,7 @@ class FilmScreen {
 
     fun clickOnFirstActor() : ActorScreen {
         Espresso.onView(withId(R.id.actors_recycler))
+            .perform(scrollTo())
             .perform(RecyclerViewActions
                 .actionOnItemAtPosition<ActorCardViewHolder>(0, click()))
         return ActorScreen()
@@ -39,6 +41,7 @@ class FilmScreen {
 
     fun clickOnFirstRecommendedFilm() : FilmScreen {
         Espresso.onView(withId(R.id.recommended_recycler))
+            .perform(scrollTo())
             .perform(RecyclerViewActions
                 .actionOnItemAtPosition<FilmCardViewHolder>(0, click()))
         return FilmScreen()
@@ -67,7 +70,7 @@ class FilmScreen {
     fun checkFilmGenresHeading() : FilmScreen {
         Espresso.onView(withId(R.id.genre_heading))
             .perform(scrollTo())
-            .check(ViewAssertions.matches(isDisplayed()))
+            .check(ViewAssertions.matches(ViewMatchers.withText("Genres")))
         return this
     }
 
@@ -81,7 +84,7 @@ class FilmScreen {
     fun checkFilmDateTitle() : FilmScreen {
         Espresso.onView(withId(R.id.date_title))
             .perform(scrollTo())
-            .check(ViewAssertions.matches(isDisplayed()))
+            .check(ViewAssertions.matches(ViewMatchers.withText("Release date:")))
         return this
     }
 
@@ -95,7 +98,7 @@ class FilmScreen {
     fun checkFilmRatingHeading() : FilmScreen {
         Espresso.onView(withId(R.id.rating_heading))
             .perform(scrollTo())
-            .check(ViewAssertions.matches(isDisplayed()))
+            .check(ViewAssertions.matches(ViewMatchers.withText("Rating:")))
         return this
     }
 
@@ -109,7 +112,7 @@ class FilmScreen {
     fun checkFilmVotersHeading() : FilmScreen {
         Espresso.onView(withId(R.id.voters_heading))
             .perform(scrollTo())
-            .check(ViewAssertions.matches(isDisplayed()))
+            .check(ViewAssertions.matches(ViewMatchers.withText("Voters:")))
         return this
     }
 
@@ -123,7 +126,7 @@ class FilmScreen {
     fun checkFilmOverviewHeading() : FilmScreen {
         Espresso.onView(withId(R.id.overview_heading))
             .perform(scrollTo())
-            .check(ViewAssertions.matches(isDisplayed()))
+            .check(ViewAssertions.matches(ViewMatchers.withText("Overview")))
         return this
     }
 
@@ -137,7 +140,7 @@ class FilmScreen {
     fun checkFilmActorsTitle() : FilmScreen {
         Espresso.onView(withId(R.id.actors_title))
             .perform(scrollTo())
-            .check(ViewAssertions.matches(isDisplayed()))
+            .check(ViewAssertions.matches(ViewMatchers.withText("Actors")))
         return this
     }
 
@@ -151,7 +154,7 @@ class FilmScreen {
     fun checkFilmRecommendedTitle() : FilmScreen {
         Espresso.onView(withId(R.id.recommended_title))
             .perform(scrollTo())
-            .check(ViewAssertions.matches(isDisplayed()))
+            .check(ViewAssertions.matches(ViewMatchers.withText("Recommended")))
         return this
     }
 

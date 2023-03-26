@@ -45,7 +45,7 @@ class RecyclerViewMatcher(private val recyclerViewId: Int) {
                 return if (targetViewId == -1) {
                     view === childView
                 } else {
-                    val targetView: View = childView!!.findViewById(targetViewId)
+                    val targetView: View? = childView?.findViewById(targetViewId)
                     view === targetView
                 }
             }
