@@ -95,6 +95,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun setBookMarkStatus(film: Film) {
+        IdlingResource.increment()
         viewModelScope.launch {
             try {
                 if (!film.isBookmarked) {
@@ -106,6 +107,7 @@ class MainViewModel @Inject constructor(
                 Log.i("bookmark", e.message.toString())
                 msg.postValue("operation failed")
             }
+            IdlingResource.decrement()
         }
     }
 }

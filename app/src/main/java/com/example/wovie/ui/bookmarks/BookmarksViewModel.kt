@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.wovie.api.ApiService
 import com.example.wovie.db.BookmarkRepository
 import com.example.wovie.ui.model.Film
+import com.example.wovie.util.IdlingResource
 import com.example.wovie.util.toFilm
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -24,6 +25,7 @@ class BookmarksViewModel @Inject constructor(
     val bookMarkResults = MutableLiveData<List<Film>>()
 
     fun setBookMarkStatus(film: Film) {
+        IdlingResource.increment()
         viewModelScope.launch {
             try {
                 if (!film.isBookmarked) {
@@ -35,10 +37,12 @@ class BookmarksViewModel @Inject constructor(
                 Log.e("set bookmark", "setBookMarkStatus ${film.isBookmarked}: ${e.message}", )
                 msg.postValue("operation failed")
             }
+            IdlingResource.decrement()
         }
     }
 
     fun clearBookMarks() {
+        IdlingResource.increment()
         viewModelScope.launch {
             try {
                 coroutineScope {
@@ -53,10 +57,12 @@ class BookmarksViewModel @Inject constructor(
                 Log.e("clear bookmarks error", e.message.toString())
                 msg.postValue("something went wrong")
             }
+            IdlingResource.decrement()
         }
     }
 
     public fun getData() {
+        IdlingResource.increment()
         viewModelScope.launch {
             delay(1000)
             loading.postValue(true)
@@ -70,6 +76,7 @@ class BookmarksViewModel @Inject constructor(
                 Log.i("get data error bookmark", e.message.toString())
             }
             loading.postValue(false)
+            IdlingResource.decrement()
         }
     }
 }

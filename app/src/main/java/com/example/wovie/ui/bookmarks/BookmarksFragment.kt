@@ -28,13 +28,10 @@ class BookmarksFragment : Fragment() {
     private lateinit var bookMarksList: MutableList<Film>
     private lateinit var bookMarkAdapter: BookmarksAdapter
 
-    init {
-        bookMarkViewModel.getData()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bookMarksList = mutableListOf()
+        bookMarkViewModel.getData()
     }
 
     override fun onCreateView(
