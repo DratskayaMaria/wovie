@@ -1,9 +1,8 @@
-package com.example.wovie.ui
-
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import com.example.wovie.ui.MainActivity
 import com.example.wovie.ui.screens.MainScreen
 import com.example.wovie.util.IdlingResource
 import org.junit.After
@@ -14,7 +13,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class CheckExistSearchResultTest {
+class CheckNonExistSearchResultTest {
     @get:Rule var activityScenarioRule = activityScenarioRule<MainActivity>()
 
     @Before
@@ -28,12 +27,12 @@ class CheckExistSearchResultTest {
     }
 
     @Test
-    fun checkExistSearchResultTest() {
+    fun checkNonExistSearchResultTest() {
         val mainScreen = MainScreen()
-        val searchRequest = "The Lion King"
+        val searchRequest = "somedefinitelynonexistingfilm"
         mainScreen
             .clickOnSearchOnAppBar()
             .enterSearchRequest(searchRequest)
-            .checkNameOfFirstSearchResult(searchRequest)
+            .checkNoResultsVisible()
     }
 }
