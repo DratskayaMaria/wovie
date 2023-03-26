@@ -4,6 +4,7 @@ import androidx.test.espresso.IdlingRegistry
 import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import androidx.test.rule.ActivityTestRule
 import com.example.wovie.ui.screens.MainScreen
 import com.example.wovie.ui.screens.SearchScreen
 import com.example.wovie.util.IdlingResource
@@ -16,8 +17,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class CheckExistSearchResultTest {
-    @get:Rule var activityScenarioRule = activityScenarioRule<MainActivity>()
-
+    @get:Rule var activityRule = ActivityTestRule(MainActivity::class.java)
     @Before
     fun before() {
         IdlingRegistry.getInstance().register(IdlingResource.countingIdlingResource)
@@ -31,7 +31,7 @@ class CheckExistSearchResultTest {
     @Test
     fun checkExistSearchResultTest() {
         val searchRequest = "Titanic"
-        val mainScreen = MainScreen()
+        val mainScreen = MainScreen(activityRule)
         mainScreen
             .clickOnSearchOnAppBar()
             .enterSearchRequest(searchRequest)

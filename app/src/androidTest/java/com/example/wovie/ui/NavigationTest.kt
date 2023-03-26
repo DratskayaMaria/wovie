@@ -25,9 +25,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class NavigationTest {
 
-    @Rule
-    @JvmField
-    var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
+    @get:Rule var activityRule = ActivityTestRule(MainActivity::class.java)
 
     @Before
     fun before() {
@@ -41,7 +39,7 @@ class NavigationTest {
 
     @Test
     fun mainActivityTest() {
-        val mainScreen = MainScreen(mActivityTestRule)
+        val mainScreen = MainScreen(activityRule)
         mainScreen
             .clickOnSearchOnAppBar()
             .checkScreenTitle()

@@ -2,6 +2,7 @@ package com.example.wovie.ui
 
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.ext.junit.rules.activityScenarioRule
+import androidx.test.rule.ActivityTestRule
 import com.example.wovie.ui.screens.MainScreen
 import com.example.wovie.util.IdlingResource
 import org.junit.After
@@ -10,8 +11,7 @@ import org.junit.Rule
 import org.junit.Test
 
 class CheckActorFromFilmScreenTest {
-    @get:Rule
-    var activityScenarioRule = activityScenarioRule<MainActivity>()
+    @get:Rule var activityRule = ActivityTestRule(MainActivity::class.java)
 
     @Before
     fun before() {
@@ -25,7 +25,7 @@ class CheckActorFromFilmScreenTest {
 
     @Test
     fun checkFilmScreenFromMainScreenTest() {
-        val mainScreen = MainScreen()
+        val mainScreen = MainScreen(activityRule)
         mainScreen
             .clickOnFirstFilm()
             .clickOnFirstActor()
