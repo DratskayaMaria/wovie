@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wovie.api.ApiService
 import com.example.wovie.ui.model.Actor
+import com.example.wovie.util.IdlingResource
 import com.example.wovie.util.toActor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -21,6 +22,7 @@ class ActorViewModel @Inject constructor(
     val loading = MutableLiveData<Boolean>()
 
     fun getActorInfo(personId: Int) {
+        IdlingResource.increment()
         viewModelScope.launch {
             loading.postValue(true)
             try {
@@ -33,6 +35,7 @@ class ActorViewModel @Inject constructor(
                 msg.postValue("Something went wrong")
             }
             loading.postValue(false)
+            IdlingResource.decrement()
         }
     }
 }
