@@ -31,13 +31,6 @@ class FilmScreen {
         return FilmScreen()
     }
 
-    fun clickOnBookmark(activityRule: ActivityTestRule<MainActivity>) : BookmarksScreen {
-        Espresso.onView(withId(R.id.bookmark))
-            .perform(ViewActions.click())
-
-        return BookmarksScreen(activityRule)
-    }
-
     fun clickOnFirstActor() : ActorScreen {
         Espresso.onView(withId(R.id.actors_recycler))
             .perform(scrollTo())
