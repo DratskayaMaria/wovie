@@ -166,9 +166,10 @@ class FilmScreen {
         return this
     }
 
-    fun addFilmInBookmark() {
+    fun addFilmInBookmark() : FilmScreen {
         Espresso.onView(withId(R.id.bookmark))
             .perform(click())
+        return this
     }
 
     fun getFilmTitle(activityRule: ActivityTestRule<MainActivity>): String {

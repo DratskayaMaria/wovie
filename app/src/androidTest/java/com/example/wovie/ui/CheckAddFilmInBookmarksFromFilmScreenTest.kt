@@ -34,11 +34,14 @@ class CheckAddFilmInBookmarksFromFilmScreenTest {
 
         val filmScreen = mainScreen.clickOnFirstFilm()
         val filmTitle = filmScreen.getFilmTitle(activityRule)
-        filmScreen.addFilmInBookmark()
-        val bookmarkScreen = filmScreen.clickOnBackButtonToMainScreen()
-            .clickOnBookmarkInAppBar()
 
-        bookmarkScreen.checkScreenTitle()
+        filmScreen
+            .addFilmInBookmark()
+            .clickOnBackButtonToMainScreen()
+        val afterEditingMainScreen = MainScreen(activityRule)
+        afterEditingMainScreen
+            .clickOnBookmarkInAppBar()
+            .checkScreenTitle()
             .checkFilmExist(filmTitle)
     }
 }
