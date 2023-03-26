@@ -33,7 +33,7 @@ class CheckExistSearchResultTest {
         val mainScreen = MainScreen()
         mainScreen
             .clickOnSearchOnAppBar()
-            .enterSearchRequest("The Lion King")
-            .checkNameOfFirstSearchResult("The Lion King")
+            .enterSearchRequest("Titanic")
+            .checkNameOfFirstSearchResult("Titanic")
     }
 }

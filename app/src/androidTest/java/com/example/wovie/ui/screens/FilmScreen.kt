@@ -2,6 +2,7 @@ package com.example.wovie.ui.screens
 
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions
@@ -15,6 +16,13 @@ import betterScrollTo
 import com.example.wovie.ui.MainActivity
 
 class FilmScreen {
+    fun clickOnBackButton(): MainScreen {
+        Espresso.onView(withId(R.id.back_button))
+            .perform(ViewActions.click())
+
+        return MainScreen()
+    }
+
     fun clickOnBookmark(activityRule: ActivityTestRule<MainActivity>) : BookmarksScreen {
         Espresso.onView(withId(R.id.bookmark))
             .perform(ViewActions.click())
@@ -58,7 +66,7 @@ class FilmScreen {
 
     fun checkFilmGenresHeading() : FilmScreen {
         Espresso.onView(withId(R.id.genre_heading))
-            .perform(betterScrollTo())
+            .perform(scrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }

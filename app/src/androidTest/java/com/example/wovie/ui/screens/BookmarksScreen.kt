@@ -13,6 +13,13 @@ import com.example.wovie.ui.MainActivity
 import com.example.wovie.ui.utils.RecyclerViewMatcher
 
 class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) {
+    fun clickOnBackButton(): MainScreen {
+        Espresso.onView(withId(R.id.back_button))
+            .perform(ViewActions.click())
+
+        return MainScreen()
+    }
+
     fun checkScreenTitle(): BookmarksScreen {
         Espresso.onView(ViewMatchers.withId(R.id.top_title))
             .check(ViewAssertions.matches(ViewMatchers.withText("Watchlist")))

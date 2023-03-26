@@ -3,6 +3,7 @@ package com.example.wovie.ui.screens
 import android.view.KeyEvent
 import android.view.View
 import android.widget.SearchView
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
@@ -20,6 +21,13 @@ import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.Matcher
 
 class SearchScreen {
+    fun clickOnBackButton(): MainScreen {
+        Espresso.onView(withId(R.id.back_button))
+            .perform(ViewActions.click())
+
+        return MainScreen()
+    }
+
     fun checkScreenTitle() {
         onView(withId(R.id.top_title))
             .check(ViewAssertions.matches(withText("Search")))
@@ -43,7 +51,7 @@ class SearchScreen {
 
     fun checkNameOfFirstSearchResult(text: String) {
         onView(RecyclerViewMatcher(R.id.search_results)
-            .atPositionOnView(0, R.id.search_result_holder))
+            .atPositionOnView(0, R.id.title))
             .check(ViewAssertions.matches(withText(text)))
     }
 
