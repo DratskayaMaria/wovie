@@ -1,10 +1,8 @@
 package com.example.wovie.ui.screens
 
 import androidx.test.espresso.Espresso
-import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -12,13 +10,16 @@ import com.example.wovie.R
 import com.example.wovie.ui.film.ActorCardViewHolder
 import com.example.wovie.ui.film.FilmCardViewHolder
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.rule.ActivityTestRule
 import betterScrollTo
+import com.example.wovie.ui.MainActivity
 
 class FilmScreen {
-    fun clickOnBookmark() : BookmarksScreen {
+    fun clickOnBookmark(activityRule: ActivityTestRule<MainActivity>) : BookmarksScreen {
         Espresso.onView(withId(R.id.bookmark))
-            .perform(click())
-        return BookmarksScreen()
+            .perform(ViewActions.click())
+
+        return BookmarksScreen(activityRule)
     }
 
     fun clickOnFirstActor() : ActorScreen {
