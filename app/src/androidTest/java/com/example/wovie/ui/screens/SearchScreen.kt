@@ -1,31 +1,31 @@
 package com.example.wovie.ui.screens
 
 import android.view.KeyEvent
-import android.view.View
-import android.widget.SearchView
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.UiController
-import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.pressKey
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.matcher.RootMatchers.withDecorView
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.rule.ActivityTestRule
 import com.example.wovie.R
-import com.example.wovie.ui.main.FilmViewHolder
+import com.example.wovie.ui.MainActivity
 import com.example.wovie.ui.search.SearchViewHolder
 import com.example.wovie.ui.utils.RecyclerViewMatcher
-import org.hamcrest.CoreMatchers.allOf
-import org.hamcrest.Matcher
+import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.not
 
-class SearchScreen {
+
+class SearchScreen(private val activityRule: ActivityTestRule<MainActivity>) {
     fun clickOnBackButton(): MainScreen {
         Espresso.onView(withId(R.id.back_button))
             .perform(ViewActions.click())
 
-        return MainScreen()
+        return MainScreen(activityRule)
     }
 
     fun checkScreenTitle() : SearchScreen{
@@ -39,7 +39,7 @@ class SearchScreen {
             .perform(
                 RecyclerViewActions
                 .actionOnItemAtPosition<SearchViewHolder>(0, ViewActions.click()))
-        return FilmScreen()
+        return FilmScreen(activityRule)
     }
 
     fun enterSearchRequest(text: String): SearchScreen {
@@ -74,6 +74,22 @@ class SearchScreen {
         onView(RecyclerViewMatcher(R.id.search_results)
             .atPositionOnView(0, R.id.rating))
             .check(ViewAssertions.matches(isDisplayed()))
+    }
+
+    fun isNoInternetMessageDisplayed() {
+        onView(withText("No internet connection")).inRoot(
+            withDecorView(
+                not(
+                    `is`(
+                        activityRule.activity.window.decorView
+                    )
+                )
+            )
+        ).check(
+            matches(
+                isDisplayed()
+            )
+        )
     }
 
 }

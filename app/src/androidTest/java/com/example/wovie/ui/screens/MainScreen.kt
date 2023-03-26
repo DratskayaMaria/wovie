@@ -1,10 +1,12 @@
 package com.example.wovie.ui.screens
 
+import ToastMatcher
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Root
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
@@ -21,16 +23,10 @@ import com.example.wovie.ui.utils.RecyclerViewItemCountAssertion
 import com.example.wovie.ui.utils.RecyclerViewMatcher
 import com.example.wovie.ui.utils.withDrawable
 import org.hamcrest.Matcher
-import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.not
 
-class MainScreen() {
 
-    private var activityRule: ActivityTestRule<MainActivity>? = null
-
-    constructor(activityRule: ActivityTestRule<MainActivity>) : this() {
-       this.activityRule = activityRule
-    }
+class MainScreen(private val activityRule: ActivityTestRule<MainActivity>) {
 
     fun getFilmTitleByPos(pos: Int): String? {
         return getRecyclerById(R.id.now_playing_recyclerview)
@@ -70,28 +66,28 @@ class MainScreen() {
     }
 
     private fun getRecyclerById(id: Int): RecyclerView? {
-        return activityRule?.activity?.findViewById(id)
+        return activityRule.activity.findViewById(id)
     }
 
     fun clickOnBookmarkInAppBar(): BookmarksScreen {
         onView(withId(R.id.book_marks))
             .perform(click())
 
-        return BookmarksScreen(activityRule!!)
+        return BookmarksScreen(activityRule)
     }
 
     fun clickOnSearchOnAppBar(): SearchScreen {
         onView(withId(R.id.search_view))
             .perform(ViewActions.click())
 
-        return SearchScreen()
+        return SearchScreen(activityRule)
     }
 
     fun clickOnFirstFilm(): FilmScreen {
         onView(withId(R.id.now_playing_recyclerview))
             .perform(scrollTo())
             .perform(RecyclerViewActions.actionOnItemAtPosition<FilmViewHolder>(0, click()))
-        return FilmScreen()
+        return FilmScreen(activityRule)
     }
 
     fun addFilmInBookmarks(position: Int, isAlreadyBookmarked: Boolean): MainScreen {
@@ -192,19 +188,22 @@ class MainScreen() {
     }
 
     fun isNoInternetMessageDisplayed() {
-        onView(withText("No internet connection")).inRoot(
-            withDecorView(
-                not(
-                    `is`(
-                        activityRule?.getActivity()?.getWindow()?.getDecorView()
-                    )
-                )
-            )
-        ).check(
-            matches(
-                isDisplayed()
-            )
-        )
+//        onView(withText("No internet connection")).inRoot(
+//            withDecorView(
+//                not(
+//                    activityRule?.getActivity()?.getWindow()?.getDecorView()
+//                )
+//            )
+//        )
+//            .check(matches(isDisplayed()))
+
+        onView(withText("No internet connection"))
+            .inRoot(isToast())
+            .check(matches(isDisplayed()))
+    }
+
+    fun isToast(): Matcher<Root?>? {
+        return ToastMatcher()
     }
 
     companion object {

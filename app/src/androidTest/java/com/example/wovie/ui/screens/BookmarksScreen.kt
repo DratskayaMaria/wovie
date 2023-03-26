@@ -27,7 +27,7 @@ class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) 
         onView(withId(R.id.back_button))
             .perform(ViewActions.click())
 
-        return MainScreen()
+        return MainScreen(activityRule)
     }
 
     fun checkScreenTitle(): BookmarksScreen {
@@ -103,6 +103,13 @@ class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) 
                     .perform(ViewActions.click())
                 clickYesButtonInAlertDialog()
             }
+        return this
+    }
+
+    fun clickOnBookmarkButtonOnFilmPosition(position: Int): BookmarksScreen {
+        onView(RecyclerViewMatcher(R.id.bookmarks_recyclerview)
+            .atPositionOnView(position, R.id.book_mark))
+            .perform(ViewActions.click())
         return this
     }
 

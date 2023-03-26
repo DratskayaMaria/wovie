@@ -11,9 +11,7 @@ import org.junit.Rule
 import org.junit.Test
 
 class CheckFilmScreenFromMainScreenTest {
-    @get:Rule
-    var activityScenarioRule = activityScenarioRule<MainActivity>()
-
+    @get:Rule var activityRule = ActivityTestRule(MainActivity::class.java)
     @Before
     fun before() {
         IdlingRegistry.getInstance().register(IdlingResource.countingIdlingResource)

@@ -18,19 +18,19 @@ import androidx.test.rule.ActivityTestRule
 import betterScrollTo
 import com.example.wovie.ui.MainActivity
 
-class FilmScreen {
+class FilmScreen(private val activityRule: ActivityTestRule<MainActivity>) {
     fun clickOnBackButtonToMainScreen(): MainScreen {
         Espresso.onView(withId(R.id.back_button))
             .perform(ViewActions.click())
 
-        return MainScreen()
+        return MainScreen(activityRule)
     }
 
     fun clickOnBackButtonToFilmScreen(): FilmScreen {
         Espresso.onView(withId(R.id.back_button))
             .perform(ViewActions.click())
 
-        return FilmScreen()
+        return FilmScreen(activityRule)
     }
 
     fun clickOnFirstActor() : ActorScreen {
@@ -38,7 +38,7 @@ class FilmScreen {
             .perform(scrollTo())
             .perform(RecyclerViewActions
                 .actionOnItemAtPosition<ActorCardViewHolder>(0, click()))
-        return ActorScreen()
+        return ActorScreen(activityRule)
     }
 
     fun clickOnFirstRecommendedFilm() : FilmScreen {
@@ -46,7 +46,7 @@ class FilmScreen {
             .perform(scrollTo())
             .perform(RecyclerViewActions
                 .actionOnItemAtPosition<FilmCardViewHolder>(0, click()))
-        return FilmScreen()
+        return FilmScreen(activityRule)
     }
 
     fun checkFilmTitle(nameFilm: String?) : FilmScreen {

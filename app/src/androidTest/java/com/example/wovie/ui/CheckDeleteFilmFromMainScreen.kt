@@ -14,13 +14,15 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class CheckDeleteFilmFromBookmarksTest {
-    @get:Rule var activityRule = ActivityTestRule(MainActivity::class.java)
-    lateinit var mainScreen: MainScreen
+class CheckDeleteFilmFromMainScreen {
+    @get:Rule
+    var activityRule = ActivityTestRule(MainActivity::class.java)
+
+    val mainScreen = MainScreen(activityRule)
+
     @Before
     fun before() {
         IdlingRegistry.getInstance().register(IdlingResource.countingIdlingResource)
-        mainScreen = MainScreen(activityRule)
         mainScreen.addFilmInBookmarks(0, mainScreen.isFilmBookmarkedByPos(0))
     }
 
@@ -30,13 +32,11 @@ class CheckDeleteFilmFromBookmarksTest {
     }
 
     @Test
-    fun checkDeleteFilmFromBookmarks() {
+    fun test() {
+        val deletedFilm = mainScreen.getFilmTitleByPos(0)
         mainScreen
             .deleteFirstFilmFromBookmarks()
-        val firstFilmTitle = mainScreen.getFilmTitleByPos(0)
-        mainScreen
             .clickOnBookmarkInAppBar()
-            .checkScreenTitle()
-            .checkFilmExist(firstFilmTitle)
+            .checkFilmDoesNotExist(deletedFilm)
     }
 }
