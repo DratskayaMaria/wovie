@@ -26,7 +26,7 @@ class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) 
         return this
     }
 
-    fun checkFilmExist(nameFilm: String): BookmarksScreen {
+    fun checkFilmExist(nameFilm: String?): BookmarksScreen {
         val count = activityRule.activity.findViewById<RecyclerView>(R.id.bookmarks_recyclerview).adapter?.itemCount
         for(i in 0..count!!) {
             onView(RecyclerViewMatcher(R.id.bookmarks_recyclerview)
@@ -41,7 +41,6 @@ class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) 
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }
-
 
     fun clickDeleteButton() {
         Espresso.onView(ViewMatchers.withId(R.id.delete_icon))

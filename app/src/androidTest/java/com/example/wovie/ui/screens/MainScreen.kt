@@ -2,6 +2,7 @@ package com.example.wovie.ui.screens
 
 import android.view.View
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
@@ -18,8 +19,29 @@ import com.example.wovie.ui.utils.RecyclerViewItemCountAssertion
 import com.example.wovie.ui.utils.RecyclerViewMatcher
 import com.example.wovie.ui.utils.withDrawable
 import org.hamcrest.Matcher
+import org.junit.Rule
 
-class MainScreen : BaseScreen() {
+class MainScreen() {
+
+    private var activityRule: ActivityTestRule<MainActivity>? = null
+
+    constructor(activityRule: ActivityTestRule<MainActivity>) : this() {
+       this.activityRule = activityRule
+    }
+
+    fun getFirstFilmTitle(): String? {
+        return getRecyclerById(R.id.now_playing_recyclerview)
+            ?.findViewHolderForAdapterPosition(0)
+            ?.itemView
+            ?.findViewById<TextView>(R.id.title)
+            ?.text
+            ?.toString()
+    }
+
+    private fun getRecyclerById(id: Int): RecyclerView? {
+        return activityRule?.activity?.findViewById<RecyclerView>(id)
+    }
+
     fun clickOnBookmarkInAppBar(activity: ActivityTestRule<MainActivity>): BookmarksScreen {
         onView(withId(R.id.book_marks))
             .perform(ViewActions.click())
@@ -68,13 +90,13 @@ class MainScreen : BaseScreen() {
         return this
     }
 
-    fun addFirstFilmInBookmarks(): String {
-        onView(RecyclerViewMatcher(R.id.now_playing_recyclerview)
-            .atPositionOnView(0, R.id.book_mark))
+    fun addFirstFilmInBookmarks(): MainScreen {
+        onView(
+            RecyclerViewMatcher(R.id.now_playing_recyclerview)
+                .atPositionOnView(0, R.id.book_mark)
+        )
             .perform(click())
-
-        return onView(RecyclerViewMatcher(R.id.search_results)
-            .atPositionOnView(0, R.id.title)).toString()
+        return this
     }
 
 

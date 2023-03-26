@@ -17,13 +17,16 @@ class CheckAddFilmInBookmarksTest {
 
     @Test
     fun checkAddFilmInBookmarks() {
-        val mainScreen = MainScreen()
-        val filmTitle = mainScreen.addFirstFilmInBookmarks()
-        println(filmTitle)
-        mainScreen.checkFirstFilmBookmarkedFlag(true)
+        val mainScreen = MainScreen(activityRule)
+        mainScreen
+            .addFirstFilmInBookmarks()
+            .checkFirstFilmBookmarkedFlag(true)
+
+        val bookmarkedFilmTitle = mainScreen.getFirstFilmTitle()
+
         mainScreen.clickOnBookmarkInAppBar(activityRule)
             .checkScreenTitle()
             .isDeleteButtonVisible()
-            .checkFilmExist(filmTitle)
+            .checkFilmExist(bookmarkedFilmTitle)
     }
 }
