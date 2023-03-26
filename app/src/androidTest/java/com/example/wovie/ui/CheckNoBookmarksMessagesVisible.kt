@@ -22,9 +22,8 @@ class CheckNoBookmarksMessagesVisible {
         IdlingRegistry.getInstance().register(IdlingResource.countingIdlingResource)
         val mainScreen = MainScreen()
         mainScreen
-            .clickOnBookmarkInAppBar(activityRule)
+            .clickOnBookmarkInAppBar()
             .clickDeleteButton()
-            .clickYesButtonInAlertDialog()
     }
 
     @After
@@ -36,7 +35,7 @@ class CheckNoBookmarksMessagesVisible {
     fun checkDeleteAllBookmarksTest() {
         val mainScreen = MainScreen()
         mainScreen
-            .clickOnBookmarkInAppBar(activityRule)
+            .clickOnBookmarkInAppBar()
             .isNoBookmarksVisible()
     }
 }

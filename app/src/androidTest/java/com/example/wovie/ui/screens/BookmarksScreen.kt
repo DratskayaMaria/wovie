@@ -1,5 +1,7 @@
 package com.example.wovie.ui.screens
 
+import android.widget.ImageView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
@@ -33,10 +35,14 @@ class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) 
         return this
     }
 
-    fun isDeleteButtonVisible(): BookmarksScreen {
-        onView(withId(R.id.delete_icon))
-            .check(ViewAssertions.matches(isDisplayed()))
-        return this
+//    fun isDeleteButtonVisible(): BookmarksScreen {
+//        onView(withId(R.id.delete_icon))
+//            .check(ViewAssertions.matches(isDisplayed()))
+//        return this
+//    }
+
+    private fun isDeleteButtonVisible(): Boolean {
+        return activityRule.activity.findViewById<ImageView>(R.id.delete_icon)?.isVisible!!
     }
 
     fun isNoBookmarksVisible() {
@@ -44,9 +50,9 @@ class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) 
             .check(ViewAssertions.matches(isDisplayed()))
     }
 
-
     fun clickDeleteButton(): BookmarksScreen {
-        if View(withId(R.id.delete_icon)).isDisplayed() {
+        val isIconVisible = isDeleteButtonVisible()
+        if (isIconVisible) {
                 onView(withId(R.id.delete_icon))
                     .perform(ViewActions.click())
                 clickYesButtonInAlertDialog()
