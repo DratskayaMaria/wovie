@@ -1,7 +1,6 @@
 package com.example.wovie.ui
 
 import androidx.test.espresso.IdlingRegistry
-import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
@@ -15,12 +14,17 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class CheckDeleteAllBookmarksTest {
+class CheckNoBookmarksMessagesVisible {
     @get:Rule var activityRule = ActivityTestRule(MainActivity::class.java)
 
     @Before
     fun before() {
         IdlingRegistry.getInstance().register(IdlingResource.countingIdlingResource)
+        val mainScreen = MainScreen()
+        mainScreen
+            .clickOnBookmarkInAppBar(activityRule)
+            .clickDeleteButton()
+            .clickYesButtonInAlertDialog()
     }
 
     @After
@@ -32,11 +36,7 @@ class CheckDeleteAllBookmarksTest {
     fun checkDeleteAllBookmarksTest() {
         val mainScreen = MainScreen()
         mainScreen
-            .addFilmInBookmarks(0)
-            .addFilmInBookmarks(1)
             .clickOnBookmarkInAppBar(activityRule)
-            .clickDeleteButton()
-            .clickYesButtonInAlertDialog()
             .isNoBookmarksVisible()
     }
 }
