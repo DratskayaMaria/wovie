@@ -27,9 +27,12 @@ class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) 
     }
 
     fun checkFilmExist(nameFilm: String): BookmarksScreen {
-        onView(RecyclerViewMatcher(R.id.bookmarks_recyclerview)
-            .atPositionOnView(0, R.id.title))
-            .check(ViewAssertions.matches(withText(nameFilm)));
+        val count = activityRule.activity.findViewById<RecyclerView>(R.id.bookmarks_recyclerview).adapter?.itemCount
+        for(i in 0..count!!) {
+            onView(RecyclerViewMatcher(R.id.bookmarks_recyclerview)
+                .atPositionOnView(i, R.id.title))
+                .check(ViewAssertions.matches(withText(nameFilm)));
+        }
         return this
     }
 
