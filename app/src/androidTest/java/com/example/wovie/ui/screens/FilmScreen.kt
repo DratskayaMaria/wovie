@@ -12,6 +12,7 @@ import com.example.wovie.R
 import com.example.wovie.ui.film.ActorCardViewHolder
 import com.example.wovie.ui.film.FilmCardViewHolder
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import betterScrollTo
 
 class FilmScreen {
     fun clickOnBookmark() : BookmarksScreen {
