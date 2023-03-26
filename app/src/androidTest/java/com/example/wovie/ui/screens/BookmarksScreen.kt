@@ -106,6 +106,13 @@ class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) 
         return this
     }
 
+    fun clickOnBookmarkButtonOnFilmPosition(position: Int): BookmarksScreen {
+        onView(RecyclerViewMatcher(R.id.bookmarks_recyclerview)
+            .atPositionOnView(position, R.id.book_mark))
+            .perform(ViewActions.click())
+        return this
+    }
+
     private fun clickYesButtonInAlertDialog() {
         onView(withId(android.R.id.button1)).perform(ViewActions.click())
     }
