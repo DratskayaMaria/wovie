@@ -26,13 +26,10 @@ class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) 
         return this
     }
 
-    fun checkFilmExist(nameFilm: String?): BookmarksScreen {
-        val count = activityRule.activity.findViewById<RecyclerView>(R.id.bookmarks_recyclerview).adapter?.itemCount
-        for(i in 0..count!!) {
-            onView(RecyclerViewMatcher(R.id.bookmarks_recyclerview)
-                .atPositionOnView(i, R.id.title))
-                .check(ViewAssertions.matches(withText(nameFilm)));
-        }
+    fun checkFilmExist(nameFilm: String): BookmarksScreen {
+        onView(RecyclerViewMatcher(R.id.bookmarks_recyclerview)
+            .atPositionOnView(0, R.id.title))
+            .check(ViewAssertions.matches(withText(nameFilm)));
         return this
     }
 
@@ -42,8 +39,15 @@ class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) 
         return this
     }
 
-    fun clickDeleteButton() {
+    fun isNoBookmarksVisible() {
+        onView(withId(R.id.no_bookmarks_layout))
+            .check(ViewAssertions.matches(isDisplayed()))
+    }
+
+
+    fun clickDeleteButton(): BookmarksScreen {
         Espresso.onView(ViewMatchers.withId(R.id.delete_icon))
             .perform(ViewActions.click())
+        return this
     }
 }

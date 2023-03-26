@@ -62,6 +62,13 @@ class MainScreen() {
         return FilmScreen()
     }
 
+    fun addFilmInBookmarks(position: Int): MainScreen {
+        onView(RecyclerViewMatcher(R.id.now_playing_recyclerview)
+            .atPositionOnView(position, R.id.book_mark))
+            .perform(click())
+        return this
+    }
+
     fun checkNowPlayingVisible(): MainScreen {
         onView(withId(R.id.now_playing_recyclerview))
             .perform(scrollTo())
