@@ -30,7 +30,6 @@ class SearchScreen {
 
     fun enterSearchRequest(text: String): SearchScreen {
         onView(withId(R.id.search_view))
-            .perform(ViewActions.click())
             .perform(ViewActions.typeText(text))
         return this
     }
