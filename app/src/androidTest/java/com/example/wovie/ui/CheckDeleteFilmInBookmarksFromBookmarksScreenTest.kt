@@ -24,7 +24,7 @@ class CheckDeleteFilmInBookmarksFromBookmarksScreenTest {
             .clickOnBackButton()
         val filmScreen = MainScreen(activityRule).addFilmInBookmarks(0, false)
             .clickOnFirstFilm()
-        filmScreen.getFilmTitle(activityRule)
+        filmTitle = filmScreen.getFilmTitle(activityRule)
         filmScreen.clickOnBackButtonToMainScreen()
 
     }
