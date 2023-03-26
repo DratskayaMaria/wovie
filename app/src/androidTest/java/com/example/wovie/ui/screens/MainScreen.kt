@@ -1,6 +1,7 @@
 package com.example.wovie.ui.screens
 
 import android.view.View
+import android.widget.TextView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.action.ViewActions
@@ -62,10 +63,13 @@ class MainScreen : BaseScreen() {
         return this
     }
 
-    fun addFirstFilmInBookmarks() {
+    fun addFirstFilmInBookmarks(): String {
         onView(RecyclerViewMatcher(R.id.now_playing_recyclerview)
             .atPositionOnView(0, R.id.book_mark))
             .perform(click())
+
+        return onView(RecyclerViewMatcher(R.id.search_results)
+            .atPositionOnView(0, R.id.title)).toString()
     }
 
 
