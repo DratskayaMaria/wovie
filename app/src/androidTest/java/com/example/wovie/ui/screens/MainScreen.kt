@@ -8,7 +8,9 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.rule.ActivityTestRule
 import com.example.wovie.R
+import com.example.wovie.ui.MainActivity
 import com.example.wovie.ui.main.FilmViewHolder
 import com.example.wovie.ui.utils.RecyclerViewItemCountAssertion
 import com.example.wovie.ui.utils.RecyclerViewMatcher
@@ -16,11 +18,11 @@ import com.example.wovie.ui.utils.withDrawable
 import org.hamcrest.Matcher
 
 class MainScreen : BaseScreen() {
-    fun clickOnBookmarkInAppBar(): BookmarksScreen {
+    fun clickOnBookmarkInAppBar(activity: ActivityTestRule<MainActivity>): BookmarksScreen {
         onView(withId(R.id.book_marks))
             .perform(ViewActions.click())
 
-        return BookmarksScreen()
+        return BookmarksScreen(activity)
     }
 
     fun clickOnSearchOnAppBar(): SearchScreen {
