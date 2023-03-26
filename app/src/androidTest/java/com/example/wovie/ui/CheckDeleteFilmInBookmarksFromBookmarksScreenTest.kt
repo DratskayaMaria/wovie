@@ -40,7 +40,10 @@ class CheckDeleteFilmInBookmarksFromBookmarksScreenTest {
             .clickOnBookmarkInAppBar()
             .checkScreenTitle()
             .checkFilmExist(filmTitle)
-
+            .clickOnBookmarkButtonOnFilmPosition(0)
+            .clickOnBackButton()
+        MainScreen(activityRule)
+            .clickOnBookmarkInAppBar()
             .checkFilmDoesNotExist(filmTitle)
     }
 }
