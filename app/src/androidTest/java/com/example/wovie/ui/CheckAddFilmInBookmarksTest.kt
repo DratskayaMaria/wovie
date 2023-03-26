@@ -32,12 +32,12 @@ class CheckAddFilmInBookmarksTest {
     @Test
     fun checkAddFilmInBookmarks() {
         val mainScreen = MainScreen(activityRule)
+
+        mainScreen.addFilmInBookmarks(0, mainScreen.isFilmBookmarkedByPos(0))
+        val bookmarkedFilmTitle = mainScreen.getFilmTitleByPos(0)
+
         mainScreen
-            .addFirstFilmInBookmarks()
-
-        val bookmarkedFilmTitle = mainScreen.getFirstFilmTitle()
-
-        mainScreen.clickOnBookmarkInAppBar(activityRule)
+            .clickOnBookmarkInAppBar()
             .checkScreenTitle()
             //.checkFilmExist(bookmarkedFilmTitle)
     }

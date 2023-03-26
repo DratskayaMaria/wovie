@@ -30,11 +30,11 @@ class CheckDeleteAllBookmarksTest {
 
     @Test
     fun checkDeleteAllBookmarksTest() {
-        val mainScreen = MainScreen()
+        val mainScreen = MainScreen(activityRule)
         mainScreen
-            .addFilmInBookmarks(0)
-            .addFilmInBookmarks(1)
-            .clickOnBookmarkInAppBar(activityRule)
+            .addFilmInBookmarks(0, mainScreen.isFilmBookmarkedByPos(0))
+            .addFilmInBookmarks(1, mainScreen.isFilmBookmarkedByPos(1))
+            .clickOnBookmarkInAppBar()
             .clickDeleteButton()
             .clickYesButtonInAlertDialog()
             .isNoBookmarksVisible()

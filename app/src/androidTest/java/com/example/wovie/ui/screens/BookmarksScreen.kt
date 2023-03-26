@@ -26,7 +26,7 @@ class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) 
         return this
     }
 
-    fun checkFilmExist(nameFilm: String): BookmarksScreen {
+    fun checkFilmExist(nameFilm: String?): BookmarksScreen {
         onView(RecyclerViewMatcher(R.id.bookmarks_recyclerview)
             .atPositionOnView(0, R.id.title))
             .check(ViewAssertions.matches(withText(nameFilm)));
