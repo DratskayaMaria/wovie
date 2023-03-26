@@ -28,9 +28,10 @@ class SearchScreen {
         return MainScreen()
     }
 
-    fun checkScreenTitle() {
+    fun checkScreenTitle() : SearchScreen{
         onView(withId(R.id.top_title))
             .check(ViewAssertions.matches(withText("Search")))
+        return this
     }
 
     fun clickOnFirstFilm(): FilmScreen {
