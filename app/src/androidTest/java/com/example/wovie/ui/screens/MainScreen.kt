@@ -1,6 +1,7 @@
 package com.example.wovie.ui.screens
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
@@ -20,7 +21,6 @@ import com.example.wovie.ui.utils.RecyclerViewItemCountAssertion
 import com.example.wovie.ui.utils.RecyclerViewMatcher
 import com.example.wovie.ui.utils.withDrawable
 import org.hamcrest.Matcher
-import org.junit.Rule
 
 class MainScreen() {
 
@@ -30,24 +30,34 @@ class MainScreen() {
        this.activityRule = activityRule
     }
 
-    fun getFirstFilmTitle(): String? {
+    fun getFilmTitleByPos(pos: Int): String? {
         return getRecyclerById(R.id.now_playing_recyclerview)
-            ?.findViewHolderForAdapterPosition(0)
+            ?.findViewHolderForAdapterPosition(pos)
             ?.itemView
             ?.findViewById<TextView>(R.id.title)
             ?.text
             ?.toString()
     }
 
+    fun isFilmBookmarkedByPos(pos: Int): Boolean {
+        val res = getRecyclerById(R.id.now_playing_recyclerview)
+            ?.findViewHolderForAdapterPosition(pos)
+            ?.itemView
+            ?.findViewById<ImageView>(R.id.book_mark)
+            ?.sourceLayoutResId
+
+        return res == R.drawable.bookmark
+    }
+
     private fun getRecyclerById(id: Int): RecyclerView? {
         return activityRule?.activity?.findViewById<RecyclerView>(id)
     }
 
-    fun clickOnBookmarkInAppBar(activity: ActivityTestRule<MainActivity>): BookmarksScreen {
+    fun clickOnBookmarkInAppBar(): BookmarksScreen {
         onView(withId(R.id.book_marks))
             .perform(ViewActions.click())
 
-        return BookmarksScreen(activity)
+        return BookmarksScreen(activityRule!!)
     }
 
     fun clickOnSearchOnAppBar(): SearchScreen {
@@ -64,7 +74,8 @@ class MainScreen() {
         return FilmScreen()
     }
 
-    fun addFilmInBookmarks(position: Int): MainScreen {
+    fun addFilmInBookmarks(position: Int, isAlreadyBookmarked: Boolean): MainScreen {
+        if (isAlreadyBookmarked) return this
         onView(RecyclerViewMatcher(R.id.now_playing_recyclerview)
             .atPositionOnView(position, R.id.book_mark))
             .perform(click())
@@ -99,7 +110,8 @@ class MainScreen() {
         return this
     }
 
-    fun addFirstFilmInBookmarks(): MainScreen {
+
+    fun deleteFirstFilmFromBookmarks(): MainScreen {
         onView(
             RecyclerViewMatcher(R.id.now_playing_recyclerview)
                 .atPositionOnView(0, R.id.book_mark)
@@ -108,21 +120,13 @@ class MainScreen() {
         return this
     }
 
-
-    fun deleteFirstFilmFromBookmarks() {
-        onView(
-            RecyclerViewMatcher(R.id.now_playing_recyclerview)
-                .atPositionOnView(0, R.id.book_mark)
-        )
-            .perform(click())
-    }
-
-    fun checkFirstFilmBookmarkedFlag(isBookmarked: Boolean) {
+    fun checkFirstFilmBookmarkedFlag(isBookmarked: Boolean): MainScreen {
         onView(
             RecyclerViewMatcher(R.id.now_playing_recyclerview)
                 .atPositionOnView(0, R.id.book_mark)
         )
             .check(ViewAssertions.matches(isBookmarked(isBookmarked)))
+        return this
     }
 
     private fun isBookmarked(isBookmarked: Boolean): Matcher<View> {

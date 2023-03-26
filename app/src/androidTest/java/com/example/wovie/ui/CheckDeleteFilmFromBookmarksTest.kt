@@ -15,20 +15,22 @@ import org.junit.runner.RunWith
 class CheckDeleteFilmFromBookmarksTest {
 
     var activityRule = ActivityTestRule(MainActivity::class.java)
-
+    lateinit var mainScreen: MainScreen
     @Before
     fun before() {
-        val mainScreen = MainScreen()
-        mainScreen.addFirstFilmInBookmarks()
+        mainScreen = MainScreen(activityRule)
+        mainScreen.addFilmInBookmarks(0, mainScreen.isFilmBookmarkedByPos(0))
     }
 
     @Test
     fun checkDeleteFilmFromBookmarks() {
-        val mainScreen = MainScreen()
-        mainScreen.deleteFirstFilmFromBookmarks()
-        mainScreen.checkFirstFilmBookmarkedFlag(false)
-        mainScreen.clickOnBookmarkInAppBar(activityRule)
+        mainScreen
+            .deleteFirstFilmFromBookmarks()
+            .checkFirstFilmBookmarkedFlag(false)
+        val firstFilmTitle = mainScreen.getFilmTitleByPos(0)
+        mainScreen
+            .clickOnBookmarkInAppBar()
             .checkScreenTitle()
-            .checkFilmExist("fdvdf")
+            .checkFilmExist(firstFilmTitle)
     }
 }

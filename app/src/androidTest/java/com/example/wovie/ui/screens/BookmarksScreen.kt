@@ -26,7 +26,7 @@ class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) 
         return this
     }
 
-    fun checkFilmExist(nameFilm: String): BookmarksScreen {
+    fun checkFilmExist(nameFilm: String?): BookmarksScreen {
         onView(RecyclerViewMatcher(R.id.bookmarks_recyclerview)
             .atPositionOnView(0, R.id.title))
             .check(ViewAssertions.matches(withText(nameFilm)));
@@ -46,14 +46,16 @@ class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) 
 
 
     fun clickDeleteButton(): BookmarksScreen {
-        Espresso.onView(ViewMatchers.withId(R.id.delete_icon))
-            .perform(ViewActions.click())
+        if View(withId(R.id.delete_icon)).isDisplayed() {
+                onView(withId(R.id.delete_icon))
+                    .perform(ViewActions.click())
+                clickYesButtonInAlertDialog()
+            }
         return this
     }
 
-    fun clickYesButtonInAlertDialog(): BookmarksScreen {
+    private fun clickYesButtonInAlertDialog() {
         onView(withId(android.R.id.button1)).perform(ViewActions.click())
-        return this
     }
 
 }
