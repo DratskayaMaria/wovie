@@ -35,7 +35,7 @@ class MainViewModel @Inject constructor(
     val upcomingMutableLiveData = MutableLiveData<List<Film>>()
 
     fun getFilms() {
-        IdlingResource.countingIdlingResource.increment()
+        IdlingResource.increment()
         viewModelScope.launch {
             try {
                 coroutineScope {
@@ -47,6 +47,7 @@ class MainViewModel @Inject constructor(
                         var topRatedResults: TopRated? = null
                         var upcomingResults: Upcoming? = null
                         var bookmarkedMovies: List<Int> = mutableListOf()
+                        IdlingResource.increment()
                         val popular = async {
                             popularResults = apiService.getPopularMovies()
                             nowPlayingResults = apiService.getNowPlayingMovies()
@@ -68,21 +69,25 @@ class MainViewModel @Inject constructor(
                             upcomingMutableLiveData.postValue(upcomingResults?.results?.map { response ->
                                 response.toFilm(bookmarkedMovies.contains(response.id))
                             })
-                            IdlingResource.countingIdlingResource.decrement()
+                            IdlingResource.decrement()
                         }
                     } catch (exception: Exception) {
                         Log.i("popular exeception", exception.message.toString())
+                        IdlingResource.decrement()
                     }
 
                     loading.postValue(false)
+                    IdlingResource.decrement()
                 }
             }
             catch (unknownHostException:UnknownHostException) {
                 Log.i("error",unknownHostException.message.toString())
                 msg.postValue("No internet connection")
+                IdlingResource.decrement()
             }
             catch (exception :Exception){
                 Log.i("error",exception.message.toString())
+                IdlingResource.decrement()
             }
 
         }
