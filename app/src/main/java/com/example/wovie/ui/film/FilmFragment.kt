@@ -68,14 +68,12 @@ class FilmFragment : Fragment() {
         binding.actorsRecycler.adapter = actorsAdapter
         binding.recommendedRecycler.adapter = recommendedAdapter
 
-        IdlingResource.increment()
         filmViewModel.getGenresList()
         filmViewModel.getCast(film.filmId)
         filmViewModel.getRecommendedList(film.filmId)
-        IdlingResource.decrement()
         filmViewModel.loading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressbar.isVisible = isLoading
-            binding.filmInfo.isVisible = !isLoading
+            binding.filmContainer.isVisible = !isLoading
         }
         filmViewModel.genres.observe(viewLifecycleOwner) { responseGenres ->
             film.genres?.map { filmGenreId ->

@@ -30,6 +30,7 @@ class FilmViewModel @Inject constructor(
     val recommended = MutableLiveData<List<Film>>()
 
     fun getGenresList() {
+        IdlingResource.increment()
         viewModelScope.launch {
             loading.postValue(true)
             try {
@@ -39,10 +40,12 @@ class FilmViewModel @Inject constructor(
                 msg.postValue("Something went wrong")
             }
             loading.postValue(false)
+            IdlingResource.decrement()
         }
     }
 
     fun getCast(movieId: Int) {
+        IdlingResource.increment()
         viewModelScope.launch {
             try {
                 val castResponse = apiService.getActorsByMovie(movieId)
@@ -52,13 +55,14 @@ class FilmViewModel @Inject constructor(
                     })
                 }
             } catch (exception: Exception) {
-                val e = exception
                 msg.postValue("Something went wrong")
             }
+            IdlingResource.decrement()
         }
     }
 
     fun getRecommendedList(movieId: Int) {
+        IdlingResource.increment()
         viewModelScope.launch {
             try {
                 var recomResp: RecommendedResponse? = null
@@ -76,11 +80,13 @@ class FilmViewModel @Inject constructor(
                 val e = exception
                 msg.postValue("Something went wrong")
             }
+            IdlingResource.decrement()
         }
     }
 
     fun setBookMarkStatus(film: Film) {
         film.isBookmarked = !film.isBookmarked
+        IdlingResource.increment()
         viewModelScope.launch {
             try {
                 if (film.isBookmarked) {
@@ -91,6 +97,7 @@ class FilmViewModel @Inject constructor(
             } catch (e: Exception) {
                 msg.postValue("operation failed")
             }
+            IdlingResource.decrement()
         }
     }
 }
