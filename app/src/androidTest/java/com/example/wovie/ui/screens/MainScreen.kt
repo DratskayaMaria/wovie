@@ -9,10 +9,10 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.RootMatchers.withDecorView
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
 import com.example.wovie.R
 import com.example.wovie.ui.MainActivity
@@ -21,6 +21,8 @@ import com.example.wovie.ui.utils.RecyclerViewItemCountAssertion
 import com.example.wovie.ui.utils.RecyclerViewMatcher
 import com.example.wovie.ui.utils.withDrawable
 import org.hamcrest.Matcher
+import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.not
 
 class MainScreen() {
 
@@ -171,7 +173,26 @@ class MainScreen() {
             .check(ViewAssertions.matches(isDisplayed()))
     }
 
+    fun isNoInternetMessageDisplayed() {
+        onView(withText("No internet connection")).inRoot(
+            withDecorView(
+                not(
+                    `is`(
+                        activityRule?.getActivity()?.getWindow()?.getDecorView()
+                    )
+                )
+            )
+        ).check(
+            matches(
+                isDisplayed()
+            )
+        )
+    }
+
     companion object {
         private const val FILMS_COUNT = 20
     }
+
+
 }
+
