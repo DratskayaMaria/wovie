@@ -37,6 +37,7 @@ class CheckDeleteAllBookmarksTest {
             .addFilmInBookmarks(1)
             .clickOnBookmarkInAppBar(activityRule)
             .clickDeleteButton()
+            .clickYesButtonInAlertDialog()
             .isNoBookmarksVisible()
     }
 }

@@ -50,4 +50,10 @@ class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) 
             .perform(ViewActions.click())
         return this
     }
+
+    fun clickYesButtonInAlertDialog(): BookmarksScreen {
+        onView(withId(android.R.id.button1)).perform(ViewActions.click())
+        return this
+    }
+
 }
