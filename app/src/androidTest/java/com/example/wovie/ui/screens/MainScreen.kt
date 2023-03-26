@@ -41,6 +41,24 @@ class MainScreen() {
             ?.toString()
     }
 
+    fun getFilmRatingByPos(pos: Int): String? {
+        return getRecyclerById(R.id.now_playing_recyclerview)
+            ?.findViewHolderForAdapterPosition(pos)
+            ?.itemView
+            ?.findViewById<TextView>(R.id.rating)
+            ?.text
+            ?.toString()
+    }
+
+    fun getFilmPosterByPos(pos: Int): String? {
+        return getRecyclerById(R.id.now_playing_recyclerview)
+            ?.findViewHolderForAdapterPosition(pos)
+            ?.itemView
+            ?.findViewById<TextView>(R.id.poster)
+            ?.text
+            ?.toString()
+    }
+
     fun isFilmBookmarkedByPos(pos: Int): Boolean {
         val res = getRecyclerById(R.id.now_playing_recyclerview)
             ?.findViewHolderForAdapterPosition(pos)

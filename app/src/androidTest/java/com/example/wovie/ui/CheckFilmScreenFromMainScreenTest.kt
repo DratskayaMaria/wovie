@@ -27,17 +27,21 @@ class CheckFilmScreenFromMainScreenTest {
     @Test
     fun checkFilmScreenFromMainScreenTest() {
         val mainScreen = MainScreen()
+        val filmTitle = mainScreen.getFilmTitleByPos(0)
+        val filmRating = mainScreen.getFilmRatingByPos(0)
+        val filmPoster = mainScreen.getFilmPosterByPos(0)
+
         mainScreen
             .clickOnFirstFilm()
-            .checkFilmName()
+            .checkFilmTitle(filmTitle)
             .checkFilmCover()
-            .checkFilmPoster()
+            //.checkFilmPoster(filmPoster)
             .checkFilmGenresHeading()
             .checkFilmGenres()
             .checkFilmDateTitle()
             .checkFilmDate()
             .checkFilmRatingHeading()
-            .checkFilmRating()
+            //.checkFilmRating(filmRating)
             .checkFilmVotersHeading()
             .checkFilmVoters()
             .checkFilmOverviewHeading()

@@ -1,6 +1,7 @@
 package com.example.wovie.ui.screens
 
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.scrollTo
@@ -48,9 +49,10 @@ class FilmScreen {
         return FilmScreen()
     }
 
-    fun checkFilmName() : FilmScreen {
+    fun checkFilmTitle(nameFilm: String?) : FilmScreen {
         Espresso.onView(withId(R.id.top_title))
-            .check(ViewAssertions.matches(isDisplayed()))
+            .perform(scrollTo())
+            .check(ViewAssertions.matches(ViewMatchers.withText(nameFilm)))
         return this
     }
 
