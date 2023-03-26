@@ -8,20 +8,29 @@ import com.example.wovie.ui.screens.MainScreen
 import com.example.wovie.util.IdlingResource
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class CheckDeleteFilmFromBookmarksTest {
-
+class CheckDeleteFilmInBookmarksFromFilmScreenTest {
+    @get:Rule
     var activityRule = ActivityTestRule(MainActivity::class.java)
-    lateinit var mainScreen: MainScreen
+    var filmTitle = ""
+
     @Before
     fun before() {
         IdlingRegistry.getInstance().register(IdlingResource.countingIdlingResource)
-        mainScreen = MainScreen(activityRule)
-        mainScreen.addFilmInBookmarks(0, mainScreen.isFilmBookmarkedByPos(0))
+        val mainScreen = MainScreen(activityRule)
+        mainScreen
+            .clickOnBookmarkInAppBar()
+            .clickDeleteButton()
+            .clickOnBackButton()
+        val filmScreen = MainScreen(activityRule).clickOnFirstFilm()
+        filmTitle = filmScreen.getFilmTitle(activityRule)
+        filmScreen.addFilmInBookmark()
+        filmScreen.clickOnBackButtonToMainScreen()
     }
 
     @After
@@ -30,14 +39,15 @@ class CheckDeleteFilmFromBookmarksTest {
     }
 
     @Test
-    fun checkDeleteFilmFromBookmarks() {
-        mainScreen
-            .deleteFirstFilmFromBookmarks()
-            .checkFirstFilmBookmarkedFlag(false)
-        val firstFilmTitle = mainScreen.getFilmTitleByPos(0)
-        mainScreen
+    fun checkDeleteFilmInBookmarksFromFilmScreen() {
+        MainScreen(activityRule)
+            .clickOnFirstFilm()
+            .addFilmInBookmark()
+            .clickOnBackButtonToMainScreen()
+
+        MainScreen(activityRule)
             .clickOnBookmarkInAppBar()
             .checkScreenTitle()
-            .checkFilmExist(firstFilmTitle)
+            .checkFilmDoesNotExist(filmTitle)
     }
 }

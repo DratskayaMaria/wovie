@@ -25,10 +25,13 @@ class CheckBookmarkedFilmsTest {
 
     @Test
     fun checkDeleteAllBookmarksTest() {
-        val mainScreen = MainScreen()
+        /*val mainScreen = MainScreen()
         mainScreen
             .addFilmInBookmarks(0)
             .clickOnBookmarkInAppBar(activityRule)
             
+            .addFilmInBookmarks(0)
+            .clickOnBookmarkInAppBar()*/
+
     }
 }
