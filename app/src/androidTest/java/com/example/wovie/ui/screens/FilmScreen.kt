@@ -12,14 +12,16 @@ import com.example.wovie.R
 import com.example.wovie.ui.film.ActorCardViewHolder
 import com.example.wovie.ui.film.FilmCardViewHolder
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.rule.ActivityTestRule
 import betterScrollTo
+import com.example.wovie.ui.MainActivity
 
 class FilmScreen {
-    fun clickOnBookmark() : BookmarksScreen {
+    fun clickOnBookmark(activityRule: ActivityTestRule<MainActivity>) : BookmarksScreen {
         Espresso.onView(withId(R.id.bookmark))
             .perform(ViewActions.click())
 
-        return BookmarksScreen()
+        return BookmarksScreen(activityRule)
     }
 
     fun clickOnFirstActor() : ActorScreen {
