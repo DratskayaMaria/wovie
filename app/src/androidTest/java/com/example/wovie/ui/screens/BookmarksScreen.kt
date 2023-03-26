@@ -39,9 +39,15 @@ class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) 
         return this
     }
 
+    fun isNoBookmarksVisible() {
+        onView(withId(R.id.no_bookmarks_layout))
+            .check(ViewAssertions.matches(isDisplayed()))
+    }
 
-    fun clickDeleteButton() {
+
+    fun clickDeleteButton(): BookmarksScreen {
         Espresso.onView(ViewMatchers.withId(R.id.delete_icon))
             .perform(ViewActions.click())
+        return this
     }
 }
