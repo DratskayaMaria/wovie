@@ -41,7 +41,8 @@ class NavigationTest {
 
     @Test
     fun mainActivityTest() {
-        MainScreen()
+        val mainScreen = MainScreen(mActivityTestRule)
+        mainScreen
             .clickOnSearchOnAppBar()
             .checkScreenTitle()
             .clickOnBackButton()
