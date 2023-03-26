@@ -46,14 +46,16 @@ class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) 
 
 
     fun clickDeleteButton(): BookmarksScreen {
-        Espresso.onView(ViewMatchers.withId(R.id.delete_icon))
-            .perform(ViewActions.click())
+        if View(withId(R.id.delete_icon)).isDisplayed() {
+                onView(withId(R.id.delete_icon))
+                    .perform(ViewActions.click())
+                clickYesButtonInAlertDialog()
+            }
         return this
     }
 
-    fun clickYesButtonInAlertDialog(): BookmarksScreen {
+    private fun clickYesButtonInAlertDialog() {
         onView(withId(android.R.id.button1)).perform(ViewActions.click())
-        return this
     }
 
 }
