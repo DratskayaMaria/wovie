@@ -171,16 +171,11 @@ class MainScreen(private val activityRule: ActivityTestRule<MainActivity>) {
         onView(withText("No internet connection")).inRoot(
             withDecorView(
                 not(
-                    `is`(
-                        activityRule?.getActivity()?.getWindow()?.getDecorView()
-                    )
+                    activityRule?.getActivity()?.getWindow()?.getDecorView()
                 )
             )
-        ).check(
-            matches(
-                isDisplayed()
-            )
         )
+            .check(matches(isDisplayed()))
     }
 
     companion object {
