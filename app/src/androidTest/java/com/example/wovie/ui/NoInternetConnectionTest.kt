@@ -22,14 +22,12 @@ class NoInternetConnectionTest {
 
     @Before
     fun before() {
-        IdlingRegistry.getInstance().register(IdlingResource.countingIdlingResource)
         InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand("svc wifi disable")
         InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand("svc data disable")
     }
 
     @After
     fun after() {
-        IdlingRegistry.getInstance().unregister(IdlingResource.countingIdlingResource)
         InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand("svc wifi enable")
         InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand("svc data enable")
     }

@@ -23,6 +23,7 @@ import com.example.wovie.ui.utils.RecyclerViewItemCountAssertion
 import com.example.wovie.ui.utils.RecyclerViewMatcher
 import com.example.wovie.ui.utils.withDrawable
 import org.hamcrest.Matcher
+import org.hamcrest.Matchers
 import org.hamcrest.Matchers.not
 
 
@@ -170,18 +171,23 @@ class MainScreen(private val activityRule: ActivityTestRule<MainActivity>) {
     }
 
     fun isNoInternetMessageDisplayed() {
-//        onView(withText("No internet connection")).inRoot(
-//            withDecorView(
-//                not(
-//                    activityRule?.getActivity()?.getWindow()?.getDecorView()
-//                )
-//            )
-//        )
-//            .check(matches(isDisplayed()))
+        onView(withText("No internet connection")).inRoot(
+            withDecorView(
+                not(
+                    Matchers.`is`(
+                        activityRule.activity.window.decorView
+                    )
+                )
+            )
+        ).check(
+            matches(
+                isDisplayed()
+            )
+        )
 
-        onView(withText("No internet connection"))
-            .inRoot(isToast())
-            .check(matches(isDisplayed()))
+//        onView(withText("No internet connection"))
+//            .inRoot(isToast())
+//            .check(matches(isDisplayed()))
     }
 
     fun isToast(): Matcher<Root?>? {
