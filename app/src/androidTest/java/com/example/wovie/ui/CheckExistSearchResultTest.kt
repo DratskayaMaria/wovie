@@ -30,10 +30,12 @@ class CheckExistSearchResultTest {
 
     @Test
     fun checkExistSearchResultTest() {
+        val searchRequest = "Titanic"
         val mainScreen = MainScreen()
         mainScreen
             .clickOnSearchOnAppBar()
-            .enterSearchRequest("Titanic")
-            .checkNameOfFirstSearchResult("Titanic")
+            .enterSearchRequest(searchRequest)
+            .checkNameOfFirstSearchResult(searchRequest)
+            .checkCardContent()
     }
 }

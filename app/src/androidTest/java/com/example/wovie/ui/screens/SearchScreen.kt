@@ -49,14 +49,29 @@ class SearchScreen {
         return this
     }
 
-    fun checkNameOfFirstSearchResult(text: String) {
+    fun checkNameOfFirstSearchResult(text: String): SearchScreen {
         onView(RecyclerViewMatcher(R.id.search_results)
             .atPositionOnView(0, R.id.title))
             .check(ViewAssertions.matches(withText(text)))
+        return this
     }
 
     fun checkNoResultsVisible() {
         onView(withId(R.id.no_results_layout))
+            .check(ViewAssertions.matches(isDisplayed()))
+    }
+
+    fun checkCardContent() {
+        onView(RecyclerViewMatcher(R.id.search_results)
+            .atPositionOnView(0, R.id.title))
+            .check(ViewAssertions.matches(isDisplayed()))
+
+        onView(RecyclerViewMatcher(R.id.search_results)
+            .atPositionOnView(0, R.id.result_image))
+            .check(ViewAssertions.matches(isDisplayed()))
+
+        onView(RecyclerViewMatcher(R.id.search_results)
+            .atPositionOnView(0, R.id.rating))
             .check(ViewAssertions.matches(isDisplayed()))
     }
 
