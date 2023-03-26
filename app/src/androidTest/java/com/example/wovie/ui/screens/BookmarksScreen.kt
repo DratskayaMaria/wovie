@@ -45,6 +45,14 @@ class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) 
         return this
     }
 
+    fun checkCard() {
+        onView(RecyclerViewMatcher(R.id.bookmarks_recyclerview).atPositionOnView(0, R.id.poster))
+            .check(ViewAssertions.matches(isDisplayed()))
+
+        onView(RecyclerViewMatcher(R.id.bookmarks_recyclerview).atPositionOnView(0, R.id.rating))
+            .check(ViewAssertions.matches(isDisplayed()))
+    }
+
     private fun matchChildViewByFilmName(filmName: String?, targetViewId: Int, itemMatcher: Matcher<View>): Matcher<View> =
         object : BoundedMatcher<View, RecyclerView>(RecyclerView::class.java) {
             override fun describeTo(description: Description) {

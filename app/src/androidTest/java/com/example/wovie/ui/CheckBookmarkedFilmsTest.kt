@@ -12,10 +12,15 @@ import org.junit.Test
 class CheckBookmarkedFilmsTest {
     @get:Rule
     var activityRule = ActivityTestRule(MainActivity::class.java)
+    val mainScreen = MainScreen(activityRule)
 
     @Before
     fun before() {
         IdlingRegistry.getInstance().register(IdlingResource.countingIdlingResource)
+        mainScreen
+            .clickOnBookmarkInAppBar()
+            .clickDeleteButton()
+            .clickOnBackButton()
     }
 
     @After
@@ -25,13 +30,23 @@ class CheckBookmarkedFilmsTest {
 
     @Test
     fun checkDeleteAllBookmarksTest() {
-        /*val mainScreen = MainScreen()
-        mainScreen
-            .addFilmInBookmarks(0)
-            .clickOnBookmarkInAppBar(activityRule)
-            
-            .addFilmInBookmarks(0)
-            .clickOnBookmarkInAppBar()*/
+        val filmTitleFromMainScreen = mainScreen.getFilmTitleByPos(1)
 
+        mainScreen
+            .addFilmInBookmarks(1, false)
+
+        val filmScreen = mainScreen.clickOnFirstFilm()
+        val filmTitleFromFilmScreen = filmScreen.getFilmTitle(activityRule)
+
+        filmScreen
+            .addFilmInBookmark()
+            .clickOnBackButtonToMainScreen()
+        val afterEditingMainScreen = MainScreen(activityRule)
+        afterEditingMainScreen
+            .clickOnBookmarkInAppBar()
+            .checkScreenTitle()
+            .checkFilmExist(filmTitleFromMainScreen)
+            .checkFilmExist(filmTitleFromFilmScreen)
+            .checkCard()
     }
 }
