@@ -1,5 +1,6 @@
 package com.example.wovie.ui.screens
 
+import android.widget.TextView
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.scrollTo
@@ -19,7 +20,7 @@ import com.example.wovie.ui.MainActivity
 class FilmScreen {
     fun clickOnBackButtonToMainScreen(): MainScreen {
         Espresso.onView(withId(R.id.back_button))
-            .perform(ViewActions.click())
+            .perform(click())
 
         return MainScreen()
     }
@@ -33,7 +34,7 @@ class FilmScreen {
 
     fun clickOnBookmark(activityRule: ActivityTestRule<MainActivity>) : BookmarksScreen {
         Espresso.onView(withId(R.id.bookmark))
-            .perform(ViewActions.click())
+            .perform(click())
 
         return BookmarksScreen(activityRule)
     }
@@ -172,4 +173,12 @@ class FilmScreen {
         return this
     }
 
+    fun addFilmInBookmark() {
+        Espresso.onView(withId(R.id.bookmark))
+            .perform(click())
+    }
+
+    fun getFilmTitle(activityRule: ActivityTestRule<MainActivity>): String {
+        return activityRule.activity?.findViewById<TextView>(R.id.top_title)?.text.toString()
+    }
 }
