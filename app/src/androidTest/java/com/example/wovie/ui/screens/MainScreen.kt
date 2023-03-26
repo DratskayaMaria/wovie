@@ -24,13 +24,7 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.not
 
-class MainScreen() {
-
-    private var activityRule: ActivityTestRule<MainActivity>? = null
-
-    constructor(activityRule: ActivityTestRule<MainActivity>) : this() {
-       this.activityRule = activityRule
-    }
+class MainScreen(private val activityRule: ActivityTestRule<MainActivity>) {
 
     fun getFilmTitleByPos(pos: Int): String? {
         return getRecyclerById(R.id.now_playing_recyclerview)
@@ -52,28 +46,28 @@ class MainScreen() {
     }
 
     private fun getRecyclerById(id: Int): RecyclerView? {
-        return activityRule?.activity?.findViewById(id)
+        return activityRule.activity.findViewById(id)
     }
 
     fun clickOnBookmarkInAppBar(): BookmarksScreen {
         onView(withId(R.id.book_marks))
             .perform(click())
 
-        return BookmarksScreen(activityRule!!)
+        return BookmarksScreen(activityRule)
     }
 
     fun clickOnSearchOnAppBar(): SearchScreen {
         onView(withId(R.id.search_view))
             .perform(ViewActions.click())
 
-        return SearchScreen()
+        return SearchScreen(activityRule)
     }
 
     fun clickOnFirstFilm(): FilmScreen {
         onView(withId(R.id.now_playing_recyclerview))
             .perform(scrollTo())
             .perform(RecyclerViewActions.actionOnItemAtPosition<FilmViewHolder>(0, click()))
-        return FilmScreen()
+        return FilmScreen(activityRule)
     }
 
     fun addFilmInBookmarks(position: Int, isAlreadyBookmarked: Boolean): MainScreen {

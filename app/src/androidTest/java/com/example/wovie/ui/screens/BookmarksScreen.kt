@@ -27,7 +27,7 @@ class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) 
         onView(withId(R.id.back_button))
             .perform(ViewActions.click())
 
-        return MainScreen()
+        return MainScreen(activityRule)
     }
 
     fun checkScreenTitle(): BookmarksScreen {

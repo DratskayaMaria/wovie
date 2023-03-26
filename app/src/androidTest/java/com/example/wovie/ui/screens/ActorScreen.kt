@@ -7,14 +7,16 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.rule.ActivityTestRule
 import com.example.wovie.R
+import com.example.wovie.ui.MainActivity
 
-class ActorScreen {
+class ActorScreen(private val activityRule: ActivityTestRule<MainActivity>) {
     fun clickOnBackButton(): FilmScreen {
         Espresso.onView(withId(R.id.back_button))
             .perform(ViewActions.click())
 
-        return FilmScreen()
+        return FilmScreen(activityRule)
     }
 
     fun checkTitle() : ActorScreen{
