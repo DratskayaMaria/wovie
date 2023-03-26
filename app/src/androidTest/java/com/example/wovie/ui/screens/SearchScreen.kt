@@ -1,26 +1,24 @@
 package com.example.wovie.ui.screens
 
 import android.view.KeyEvent
-import android.view.View
-import android.widget.SearchView
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.UiController
-import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.pressKey
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.matcher.RootMatchers.withDecorView
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
 import com.example.wovie.R
 import com.example.wovie.ui.MainActivity
-import com.example.wovie.ui.main.FilmViewHolder
 import com.example.wovie.ui.search.SearchViewHolder
 import com.example.wovie.ui.utils.RecyclerViewMatcher
-import org.hamcrest.CoreMatchers.allOf
-import org.hamcrest.Matcher
+import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.not
+
 
 class SearchScreen(private val activityRule: ActivityTestRule<MainActivity>) {
     fun clickOnBackButton(): MainScreen {
@@ -76,6 +74,22 @@ class SearchScreen(private val activityRule: ActivityTestRule<MainActivity>) {
         onView(RecyclerViewMatcher(R.id.search_results)
             .atPositionOnView(0, R.id.rating))
             .check(ViewAssertions.matches(isDisplayed()))
+    }
+
+    fun isNoInternetMessageDisplayed() {
+        onView(withText("No internet connection")).inRoot(
+            withDecorView(
+                not(
+                    `is`(
+                        activityRule.activity.window.decorView
+                    )
+                )
+            )
+        ).check(
+            matches(
+                isDisplayed()
+            )
+        )
     }
 
 }

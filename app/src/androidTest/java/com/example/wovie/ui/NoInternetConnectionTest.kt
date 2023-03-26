@@ -35,8 +35,11 @@ class NoInternetConnectionTest {
     }
 
     @Test
-    fun checkExistSearchResultTest() {
+    fun noInternetConnectionTest() {
         val mainScreen = MainScreen(activityRule)
-        mainScreen.isNoInternetMessageDisplayed()
+        mainScreen
+            .clickOnSearchOnAppBar()
+            .enterSearchRequest("request")
+            .isNoInternetMessageDisplayed()
     }
 }
