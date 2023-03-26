@@ -3,16 +3,17 @@ package com.example.wovie.ui.screens
 import android.view.View
 import android.widget.SearchView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import com.example.wovie.R
-import com.example.wovie.ui.main.FilmViewHolder
 import com.example.wovie.ui.search.SearchViewHolder
 import com.example.wovie.ui.utils.RecyclerViewMatcher
+import org.hamcrest.Matcher
+import org.hamcrest.CoreMatchers.allOf
 
 class SearchScreen {
     fun checkScreenTitle() {
@@ -30,8 +31,7 @@ class SearchScreen {
 
     fun enterSearchRequest(text: String): SearchScreen {
         onView(withId(R.id.search_view))
-            .perform(ViewActions.click())
-            .perform(ViewActions.typeText(text))
+            .perform(typeSearchViewText(text))
         return this
     }
 
@@ -39,5 +39,21 @@ class SearchScreen {
         onView(RecyclerViewMatcher(R.id.search_results)
             .atPositionOnView(0, R.id.search_result_holder))
             .check(ViewAssertions.matches(withText(text)))
+    }
+}
+
+fun typeSearchViewText(text: String?): ViewAction? {
+    return object : ViewAction {
+        override fun getConstraints(): Matcher<View> {
+            return allOf(isDisplayed(), isAssignableFrom(SearchView::class.java))
+        }
+
+        override fun getDescription(): String {
+            return "Change view text"
+        }
+
+        override fun perform(uiController: UiController?, view: View) {
+            (view as SearchView).setQuery(text, true)
+        }
     }
 }
