@@ -20,7 +20,7 @@ import com.example.wovie.ui.MainActivity
 class FilmScreen {
     fun clickOnBackButtonToMainScreen(): MainScreen {
         Espresso.onView(withId(R.id.back_button))
-            .perform(click())
+            .perform(ViewActions.click())
 
         return MainScreen()
     }
@@ -30,13 +30,6 @@ class FilmScreen {
             .perform(ViewActions.click())
 
         return FilmScreen()
-    }
-
-    fun clickOnBookmark(activityRule: ActivityTestRule<MainActivity>) : BookmarksScreen {
-        Espresso.onView(withId(R.id.bookmark))
-            .perform(click())
-
-        return BookmarksScreen(activityRule)
     }
 
     fun clickOnFirstActor() : ActorScreen {
