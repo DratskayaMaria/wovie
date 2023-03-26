@@ -35,11 +35,12 @@ class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) 
         return this
     }
 
-//    fun isDeleteButtonVisible(): BookmarksScreen {
-//        onView(withId(R.id.delete_icon))
-//            .check(ViewAssertions.matches(isDisplayed()))
-//        return this
-//    }
+    fun checkFilmDoesNotExist(nameFilm: String?): BookmarksScreen {
+        onView(RecyclerViewMatcher(R.id.bookmarks_recyclerview)
+            .atPositionOnView(0, R.id.title))
+            .check(ViewAssertions.doesNotExist());
+        return this
+    }
 
     private fun isDeleteButtonVisible(): Boolean {
         return activityRule.activity.findViewById<ImageView>(R.id.delete_icon)?.isVisible!!
