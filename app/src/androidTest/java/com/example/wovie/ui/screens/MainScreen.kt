@@ -9,6 +9,7 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.rule.ActivityTestRule
@@ -58,6 +59,7 @@ class MainScreen() {
 
     fun clickOnFirstFilm(): FilmScreen {
         onView(withId(R.id.now_playing_recyclerview))
+            .perform(scrollTo())
             .perform(RecyclerViewActions.actionOnItemAtPosition<FilmViewHolder>(0, click()))
         return FilmScreen()
     }

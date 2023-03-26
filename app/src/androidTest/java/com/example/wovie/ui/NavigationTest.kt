@@ -30,5 +30,16 @@ class NavigationTest {
         MainScreen()
             .clickOnSearchOnAppBar()
             .checkScreenTitle()
+            .clickOnBackButton()
+            .clickOnBookmarkInAppBar(mActivityTestRule)
+            .checkScreenTitle()
+            .clickOnBackButton()
+            .clickOnFirstFilm()
+            .clickOnFirstActor()
+            .checkTitle()
+            .clickOnBackButton()
+            .clickOnFirstRecommendedFilm()
+            .clickOnBackButtonToFilmScreen()
+            .clickOnBackButtonToMainScreen()
     }
 }

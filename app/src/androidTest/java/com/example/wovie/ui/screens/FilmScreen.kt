@@ -17,11 +17,18 @@ import betterScrollTo
 import com.example.wovie.ui.MainActivity
 
 class FilmScreen {
-    fun clickOnBackButton(): MainScreen {
+    fun clickOnBackButtonToMainScreen(): MainScreen {
         Espresso.onView(withId(R.id.back_button))
             .perform(ViewActions.click())
 
         return MainScreen()
+    }
+
+    fun clickOnBackButtonToFilmScreen(): FilmScreen {
+        Espresso.onView(withId(R.id.back_button))
+            .perform(ViewActions.click())
+
+        return FilmScreen()
     }
 
     fun clickOnBookmark(activityRule: ActivityTestRule<MainActivity>) : BookmarksScreen {
