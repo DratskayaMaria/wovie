@@ -1,6 +1,5 @@
 package com.example.wovie.ui.screens
 
-import ToastMatcher
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -186,30 +185,6 @@ class MainScreen(private val activityRule: ActivityTestRule<MainActivity>) {
         onView(RecyclerViewMatcher(recyclerId).atPositionOnView(0, R.id.title))
             .perform(scrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
-    }
-
-    fun isNoInternetMessageDisplayed() {
-        onView(withText("No internet connection")).inRoot(
-            withDecorView(
-                not(
-                    Matchers.`is`(
-                        activityRule.activity.window.decorView
-                    )
-                )
-            )
-        ).check(
-            matches(
-                isDisplayed()
-            )
-        )
-
-//        onView(withText("No internet connection"))
-//            .inRoot(isToast())
-//            .check(matches(isDisplayed()))
-    }
-
-    fun isToast(): Matcher<Root?>? {
-        return ToastMatcher()
     }
 
     companion object {

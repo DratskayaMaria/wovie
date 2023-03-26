@@ -76,20 +76,4 @@ class SearchScreen(private val activityRule: ActivityTestRule<MainActivity>) {
             .check(ViewAssertions.matches(isDisplayed()))
     }
 
-    fun isNoInternetMessageDisplayed() {
-        onView(withText("No internet connection")).inRoot(
-            withDecorView(
-                not(
-                    `is`(
-                        activityRule.activity.window.decorView
-                    )
-                )
-            )
-        ).check(
-            matches(
-                isDisplayed()
-            )
-        )
-    }
-
 }
