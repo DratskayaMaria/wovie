@@ -1,19 +1,21 @@
 package com.example.wovie.ui.screens
 
+import android.view.View
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
-import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.example.wovie.R
 import com.example.wovie.ui.main.FilmViewHolder
 import com.example.wovie.ui.utils.RecyclerViewItemCountAssertion
-import com.example.wovie.ui.utils.waitForView
-import com.example.wovie.ui.utils.waitForViewDisplayed
+import com.example.wovie.ui.utils.RecyclerViewMatcher
+import com.example.wovie.ui.utils.withDrawable
+import org.hamcrest.Matcher
 
-class MainScreen: BaseScreen() {
+class MainScreen : BaseScreen() {
     fun clickOnBookmarkInAppBar(): BookmarksScreen {
         onView(withId(R.id.book_marks))
             .perform(ViewActions.click())
@@ -30,8 +32,7 @@ class MainScreen: BaseScreen() {
 
     fun clickOnFirstFilm(): FilmScreen {
         onView(withId(R.id.now_playing_recyclerview))
-            .perform(RecyclerViewActions
-                .actionOnItemAtPosition<FilmViewHolder>(0, click()))
+            .perform(RecyclerViewActions.actionOnItemAtPosition<FilmViewHolder>(0, click()))
         return FilmScreen()
     }
 
@@ -48,7 +49,7 @@ class MainScreen: BaseScreen() {
     }
 
     fun checkTopRatedVisible(): MainScreen {
-         onView(withId(R.id.now_playing_recyclerview))
+        onView(withId(R.id.now_playing_recyclerview))
             .check(RecyclerViewItemCountAssertion(FILMS_COUNT))
         return this
     }
@@ -57,6 +58,33 @@ class MainScreen: BaseScreen() {
         onView(withId(R.id.now_playing_recyclerview))
             .check(RecyclerViewItemCountAssertion(FILMS_COUNT))
         return this
+    }
+
+    fun addFirstFilmInBookmarks() {
+        onView(RecyclerViewMatcher(R.id.now_playing_recyclerview)
+            .atPositionOnView(0, R.id.book_mark))
+            .perform(click())
+    }
+
+
+    fun deleteFirstFilmFromBookmarks() {
+        onView(RecyclerViewMatcher(R.id.now_playing_recyclerview)
+            .atPositionOnView(0, R.id.book_mark))
+            .perform(click())
+    }
+
+    fun checkFirstFilmBookmarkedFlag(isBookmarked: Boolean) {
+        onView(RecyclerViewMatcher(R.id.now_playing_recyclerview)
+            .atPositionOnView(0, R.id.book_mark))
+            .check(ViewAssertions.matches(isBookmarked(isBookmarked)))
+    }
+
+    private fun isBookmarked(isBookmarked: Boolean): Matcher<View> {
+        return if (isBookmarked) {
+            withDrawable(R.drawable.bookmark)
+        } else {
+            withDrawable(R.drawable.empty_bookmark)
+        }
     }
 
     companion object {
