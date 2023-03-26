@@ -1,10 +1,12 @@
 package com.example.wovie.ui.screens
 
+import ToastMatcher
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Root
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
@@ -21,8 +23,8 @@ import com.example.wovie.ui.utils.RecyclerViewItemCountAssertion
 import com.example.wovie.ui.utils.RecyclerViewMatcher
 import com.example.wovie.ui.utils.withDrawable
 import org.hamcrest.Matcher
-import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.not
+
 
 class MainScreen(private val activityRule: ActivityTestRule<MainActivity>) {
 
@@ -168,14 +170,22 @@ class MainScreen(private val activityRule: ActivityTestRule<MainActivity>) {
     }
 
     fun isNoInternetMessageDisplayed() {
-        onView(withText("No internet connection")).inRoot(
-            withDecorView(
-                not(
-                    activityRule?.getActivity()?.getWindow()?.getDecorView()
-                )
-            )
-        )
+//        onView(withText("No internet connection")).inRoot(
+//            withDecorView(
+//                not(
+//                    activityRule?.getActivity()?.getWindow()?.getDecorView()
+//                )
+//            )
+//        )
+//            .check(matches(isDisplayed()))
+
+        onView(withText("No internet connection"))
+            .inRoot(isToast())
             .check(matches(isDisplayed()))
+    }
+
+    fun isToast(): Matcher<Root?>? {
+        return ToastMatcher()
     }
 
     companion object {
