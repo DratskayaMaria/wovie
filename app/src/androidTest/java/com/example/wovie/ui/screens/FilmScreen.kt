@@ -119,7 +119,6 @@ class FilmScreen(private val activityRule: ActivityTestRule<MainActivity>) {
 
     fun checkFilmDate() : FilmScreen {
         Espresso.onView(withId(R.id.date))
-            .perform(scrollTo())
             .check(ViewAssertions.matches(isDisplayed()))
         return this
     }

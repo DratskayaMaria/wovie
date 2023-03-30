@@ -29,6 +29,8 @@ import org.hamcrest.Matchers.not
 class MainScreen(private val activityRule: ActivityTestRule<MainActivity>) {
 
     fun getFilmTitleByPos(pos: Int): String? {
+        onView(withId(R.id.top_rated_recyclerview))
+            .perform(scrollTo())
         return getRecyclerById(R.id.top_rated_recyclerview)
             ?.findViewHolderForAdapterPosition(pos)
             ?.itemView
