@@ -61,6 +61,7 @@ class MainScreen(private val activityRule: ActivityTestRule<MainActivity>) {
 
     fun clickOnSearchOnAppBar(): SearchScreen {
         onView(withId(R.id.search_view))
+            .perform(scrollTo())
             .perform(ViewActions.click())
 
         return SearchScreen(activityRule)
@@ -116,6 +117,7 @@ class MainScreen(private val activityRule: ActivityTestRule<MainActivity>) {
             RecyclerViewMatcher(R.id.now_playing_recyclerview)
                 .atPositionOnView(0, R.id.book_mark)
         )
+            .perform(scrollTo())
             .perform(click())
         return this
     }

@@ -59,6 +59,7 @@ class SearchFragment : Fragment(), SearchAdapter.OnSearchResultClickListener {
                 binding.searchResults.visibility = View.VISIBLE
                 binding.noResultsLayout.visibility = View.GONE
             }
+            binding.errorMsg.visibility = View.GONE
             foundFilms.clear()
             foundFilms.addAll(searchResult)
             adapter.notifyDataSetChanged()
@@ -83,11 +84,13 @@ class SearchFragment : Fragment(), SearchAdapter.OnSearchResultClickListener {
         })
         searchViewModel.msg.observe(viewLifecycleOwner, {
             if (it != null && !TextUtils.isEmpty(it)) {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                binding.errorMsg.text = it
+                binding.errorMsg.visibility = View.VISIBLE
             }
         })
         searchViewModel.loading.observe(viewLifecycleOwner, {
             binding.progressbar.isVisible = it != null && it
+            binding.errorMsg.visibility = View.GONE
         })
         return binding.root
     }
