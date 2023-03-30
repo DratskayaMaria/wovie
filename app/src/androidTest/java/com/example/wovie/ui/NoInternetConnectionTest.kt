@@ -11,6 +11,7 @@ import com.example.wovie.ui.screens.SearchScreen
 import com.example.wovie.util.IdlingResource
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
