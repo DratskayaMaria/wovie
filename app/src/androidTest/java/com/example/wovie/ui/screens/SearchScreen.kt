@@ -32,7 +32,6 @@ class SearchScreen(private val activityRule: ActivityTestRule<MainActivity>) {
 
     fun checkScreenTitle() : SearchScreen{
         onView(withId(R.id.top_title))
-            .perform(scrollTo())
             .check(ViewAssertions.matches(withText("Search")))
         return this
     }
