@@ -14,6 +14,7 @@ import com.example.wovie.ui.MainActivity
 class ActorScreen(private val activityRule: ActivityTestRule<MainActivity>) {
     fun clickOnBackButton(): FilmScreen {
         Espresso.onView(withId(R.id.back_button))
+            .perform(ViewActions.scrollTo())
             .perform(ViewActions.click())
 
         return FilmScreen(activityRule)
@@ -21,6 +22,7 @@ class ActorScreen(private val activityRule: ActivityTestRule<MainActivity>) {
 
     fun checkTitle() : ActorScreen{
         onView(withId(R.id.top_title))
+            .perform(ViewActions.scrollTo())
             .check(ViewAssertions.matches(ViewMatchers.withText("Actor")))
         return this
     }

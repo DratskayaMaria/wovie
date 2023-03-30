@@ -5,6 +5,7 @@ import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.pressKey
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -23,6 +24,7 @@ import org.hamcrest.Matchers.not
 class SearchScreen(private val activityRule: ActivityTestRule<MainActivity>) {
     fun clickOnBackButton(): MainScreen {
         Espresso.onView(withId(R.id.back_button))
+            .perform(scrollTo())
             .perform(ViewActions.click())
 
         return MainScreen(activityRule)
@@ -30,6 +32,7 @@ class SearchScreen(private val activityRule: ActivityTestRule<MainActivity>) {
 
     fun checkScreenTitle() : SearchScreen{
         onView(withId(R.id.top_title))
+            .perform(scrollTo())
             .check(ViewAssertions.matches(withText("Search")))
         return this
     }

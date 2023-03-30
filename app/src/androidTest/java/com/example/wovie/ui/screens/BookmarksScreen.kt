@@ -25,6 +25,7 @@ import org.hamcrest.Matcher
 class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) {
     fun clickOnBackButton(): MainScreen {
         onView(withId(R.id.back_button))
+            .perform(ViewActions.scrollTo())
             .perform(ViewActions.click())
 
         return MainScreen(activityRule)
@@ -32,6 +33,7 @@ class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) 
 
     fun checkScreenTitle(): BookmarksScreen {
         onView(withId(R.id.top_title))
+            .perform(ViewActions.scrollTo())
             .check(ViewAssertions.matches(ViewMatchers.withText("Watchlist")))
         return this
     }

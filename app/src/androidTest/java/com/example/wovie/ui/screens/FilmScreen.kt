@@ -24,6 +24,7 @@ import com.example.wovie.ui.utils.RecyclerViewMatcher
 class FilmScreen(private val activityRule: ActivityTestRule<MainActivity>) {
     fun clickOnBackButtonToMainScreen(): MainScreen {
         Espresso.onView(withId(R.id.back_button))
+            .perform(scrollTo())
             .perform(ViewActions.click())
 
         return MainScreen(activityRule)
@@ -31,6 +32,7 @@ class FilmScreen(private val activityRule: ActivityTestRule<MainActivity>) {
 
     fun clickOnBackButtonToFilmScreen(): FilmScreen {
         Espresso.onView(withId(R.id.back_button))
+            .perform(scrollTo())
             .perform(ViewActions.click())
 
         return FilmScreen(activityRule)
