@@ -16,7 +16,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-@Ignore
 class CheckDeleteAllBookmarksTest {
     @get:Rule var activityRule = ActivityTestRule(MainActivity::class.java)
 

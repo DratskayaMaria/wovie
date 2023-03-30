@@ -21,7 +21,6 @@ import org.mockito.Mockito.`when`
 
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-@Ignore
 class GetActorDataFromApiWithExceptionTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()

@@ -24,7 +24,6 @@ import org.hamcrest.Matchers.not
 class SearchScreen(private val activityRule: ActivityTestRule<MainActivity>) {
     fun clickOnBackButton(): MainScreen {
         Espresso.onView(withId(R.id.back_button))
-            .perform(scrollTo())
             .perform(ViewActions.click())
 
         return MainScreen(activityRule)

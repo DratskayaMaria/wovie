@@ -25,7 +25,6 @@ import org.mockito.Mockito
 
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-@Ignore
 class BookmarkScreenBookmarkFilmDeleteAllBDTest {
 
     @get:Rule

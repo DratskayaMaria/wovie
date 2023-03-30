@@ -25,7 +25,6 @@ import org.hamcrest.Matcher
 class BookmarksScreen(private val activityRule: ActivityTestRule<MainActivity>) {
     fun clickOnBackButton(): MainScreen {
         onView(withId(R.id.back_button))
-            .perform(ViewActions.scrollTo())
             .perform(ViewActions.click())
 
         return MainScreen(activityRule)
