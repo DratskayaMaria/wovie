@@ -29,7 +29,7 @@ import org.hamcrest.Matchers.not
 class MainScreen(private val activityRule: ActivityTestRule<MainActivity>) {
 
     fun getFilmTitleByPos(pos: Int): String? {
-        return getRecyclerById(R.id.now_playing_recyclerview)
+        return getRecyclerById(R.id.top_rated_recyclerview)
             ?.findViewHolderForAdapterPosition(pos)
             ?.itemView
             ?.findViewById<TextView>(R.id.title)
@@ -37,26 +37,8 @@ class MainScreen(private val activityRule: ActivityTestRule<MainActivity>) {
             ?.toString()
     }
 
-    fun getFilmRatingByPos(pos: Int): String? {
-        return getRecyclerById(R.id.now_playing_recyclerview)
-            ?.findViewHolderForAdapterPosition(pos)
-            ?.itemView
-            ?.findViewById<TextView>(R.id.rating)
-            ?.text
-            ?.toString()
-    }
-
-    fun getFilmPosterByPos(pos: Int): String? {
-        return getRecyclerById(R.id.now_playing_recyclerview)
-            ?.findViewHolderForAdapterPosition(pos)
-            ?.itemView
-            ?.findViewById<TextView>(R.id.poster)
-            ?.text
-            ?.toString()
-    }
-
     fun isFilmBookmarkedByPos(pos: Int): Boolean {
-        val res = getRecyclerById(R.id.now_playing_recyclerview)
+        val res = getRecyclerById(R.id.top_rated_recyclerview)
             ?.findViewHolderForAdapterPosition(pos)
             ?.itemView
             ?.findViewById<ImageView>(R.id.book_mark)
@@ -71,6 +53,7 @@ class MainScreen(private val activityRule: ActivityTestRule<MainActivity>) {
 
     fun clickOnBookmarkInAppBar(): BookmarksScreen {
         onView(withId(R.id.book_marks))
+            .perform(scrollTo())
             .perform(click())
 
         return BookmarksScreen(activityRule)
@@ -84,7 +67,7 @@ class MainScreen(private val activityRule: ActivityTestRule<MainActivity>) {
     }
 
     fun clickOnFirstFilm(): FilmScreen {
-        onView(withId(R.id.now_playing_recyclerview))
+        onView(withId(R.id.top_rated_recyclerview))
             .perform(scrollTo())
             .perform(RecyclerViewActions.actionOnItemAtPosition<FilmViewHolder>(0, click()))
         return FilmScreen(activityRule)
@@ -92,8 +75,9 @@ class MainScreen(private val activityRule: ActivityTestRule<MainActivity>) {
 
     fun addFilmInBookmarks(position: Int, isAlreadyBookmarked: Boolean): MainScreen {
         if (isAlreadyBookmarked) return this
-        onView(RecyclerViewMatcher(R.id.now_playing_recyclerview)
+        onView(RecyclerViewMatcher(R.id.top_rated_recyclerview)
             .atPositionOnView(position, R.id.book_mark))
+            .perform(scrollTo())
             .perform(click())
         return this
     }
