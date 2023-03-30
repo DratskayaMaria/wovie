@@ -57,6 +57,12 @@ class SearchScreen(private val activityRule: ActivityTestRule<MainActivity>) {
         return this
     }
 
+    fun checkNoInternetVisible(): SearchScreen {
+        onView(withId(R.id.error_msg))
+            .check(matches(isDisplayed()))
+        return this
+    }
+
     fun checkNoResultsVisible() {
         onView(withId(R.id.no_results_layout))
             .check(ViewAssertions.matches(isDisplayed()))
