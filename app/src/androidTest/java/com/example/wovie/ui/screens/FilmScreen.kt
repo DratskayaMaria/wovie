@@ -1,5 +1,6 @@
 package com.example.wovie.ui.screens
 
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso
