@@ -30,7 +30,7 @@ class CheckAddRecommendedFilmInBookmark {
     }
 
     @Test
-    fun checkAddFilmInBookmarksFromFilmScreen() {
+    fun checkAddRecommendedFilmInBookmark() {
         val mainScreen = MainScreen(activityRule)
 
         val filmScreen = mainScreen.clickOnFirstFilm()

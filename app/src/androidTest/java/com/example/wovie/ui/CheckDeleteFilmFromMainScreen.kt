@@ -33,7 +33,7 @@ class CheckDeleteFilmFromMainScreen {
     }
 
     @Test
-    fun test() {
+    fun checkDeleteFilmFromMainScreen() {
         val deletedFilm = mainScreen.getFilmTitleByPos(0)
         mainScreen
             .deleteFirstFilmFromBookmarks()

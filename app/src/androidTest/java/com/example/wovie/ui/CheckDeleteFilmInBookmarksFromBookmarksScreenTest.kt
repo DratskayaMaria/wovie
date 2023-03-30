@@ -41,7 +41,7 @@ class CheckDeleteFilmInBookmarksFromBookmarksScreenTest {
     }
 
     @Test
-    fun checkDeleteFilmInBookmarksFromFilmScreen() {
+    fun checkDeleteFilmInBookmarksFromBookmarksScreenTest() {
         MainScreen(activityRule)
             .clickOnBookmarkInAppBar()
             .checkScreenTitle()

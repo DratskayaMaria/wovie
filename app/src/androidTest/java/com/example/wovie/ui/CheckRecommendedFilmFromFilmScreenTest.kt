@@ -30,7 +30,7 @@ class CheckRecommendedFilmFromFilmScreenTest {
     }
 
     @Test
-    fun checkFilmScreenFromMainScreenTest() {
+    fun checkRecommendedFilmFromFilmScreenTest() {
         val mainScreen = MainScreen(activityRule)
 
         val filmScreen = mainScreen.clickOnFirstFilm()
