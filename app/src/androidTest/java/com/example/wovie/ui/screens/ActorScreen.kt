@@ -31,9 +31,10 @@ class ActorScreen(private val activityRule: ActivityTestRule<MainActivity>) {
         return this
     }
 
-    fun checkName(): ActorScreen {
-        onView(withId(R.id.name))
-            .check(ViewAssertions.matches(isDisplayed()))
+    fun checkName(actorName: String?): ActorScreen {
+        Espresso.onView(withId(R.id.name))
+            .perform(ViewActions.scrollTo())
+            .check(ViewAssertions.matches(ViewMatchers.withText(actorName)))
         return this
     }
 

@@ -26,12 +26,15 @@ class CheckActorFromFilmScreenTest {
     @Test
     fun checkFilmScreenFromMainScreenTest() {
         val mainScreen = MainScreen(activityRule)
-        mainScreen
-            .clickOnFirstFilm()
+
+        val filmScreen = mainScreen.clickOnFirstFilm()
+        val actorName = filmScreen.getActorNameByPos(0)
+
+        filmScreen
             .clickOnFirstActor()
             .checkTitle()
             .checkPhoto()
-            .checkName()
+            .checkName(actorName)
             .checkYearsOfLife()
             .checkBio()
     }

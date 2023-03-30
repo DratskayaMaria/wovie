@@ -17,6 +17,8 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.rule.ActivityTestRule
 import betterScrollTo
 import com.example.wovie.ui.MainActivity
+import com.example.wovie.ui.utils.RecyclerViewItemCountAssertion
+import com.example.wovie.ui.utils.RecyclerViewMatcher
 
 class FilmScreen(private val activityRule: ActivityTestRule<MainActivity>) {
     fun clickOnBackButtonToMainScreen(): MainScreen {
@@ -55,6 +57,29 @@ class FilmScreen(private val activityRule: ActivityTestRule<MainActivity>) {
             .check(ViewAssertions.matches(ViewMatchers.withText(nameFilm)))
         return this
     }
+
+    fun getFilmTitleByPos(pos: Int): String? {
+        return getRecyclerById(R.id.recommended_recycler)
+            ?.findViewHolderForAdapterPosition(pos)
+            ?.itemView
+            ?.findViewById<TextView>(R.id.title)
+            ?.text
+            ?.toString()
+    }
+
+    fun getActorNameByPos(pos: Int): String? {
+        return getRecyclerById(R.id.actors_recycler)
+            ?.findViewHolderForAdapterPosition(pos)
+            ?.itemView
+            ?.findViewById<TextView>(R.id.title)
+            ?.text
+            ?.toString()
+    }
+
+    private fun getRecyclerById(id: Int): RecyclerView? {
+        return activityRule.activity.findViewById(id)
+    }
+
 
     fun checkFilmCover() : FilmScreen {
         Espresso.onView(withId(R.id.cover_image))
