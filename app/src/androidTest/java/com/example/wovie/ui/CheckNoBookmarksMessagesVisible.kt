@@ -33,7 +33,7 @@ class CheckNoBookmarksMessagesVisible {
     }
 
     @Test
-    fun checkDeleteAllBookmarksTest() {
+    fun checkNoBookmarksMessagesVisible() {
         mainScreen
             .clickOnBookmarkInAppBar()
             .isNoBookmarksVisible()

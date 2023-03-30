@@ -38,7 +38,7 @@ class NavigationTest {
     }
 
     @Test
-    fun mainActivityTest() {
+    fun navigationTest() {
         val mainScreen = MainScreen(activityRule)
         mainScreen
             .clickOnSearchOnAppBar()

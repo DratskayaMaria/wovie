@@ -35,7 +35,7 @@ class CheckBookmarkedFilmsTest {
     }
 
     @Test
-    fun checkDeleteAllBookmarksTest() {
+    fun checkBookmarkedFilmsTest() {
         val filmTitleFromMainScreen = mainScreen.getFilmTitleByPos(1)
 
         mainScreen

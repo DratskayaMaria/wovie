@@ -33,7 +33,7 @@ class CheckBookmarksAfterExit {
     }
 
     @Test
-    fun checkDeleteAllBookmarksTest() {
+    fun checkBookmarksAfterExit() {
         mainScreen.addFilmInBookmarks(0, mainScreen.isFilmBookmarkedByPos(0))
         val bookmarkedFilmTitle = mainScreen.getFilmTitleByPos(0)
 
