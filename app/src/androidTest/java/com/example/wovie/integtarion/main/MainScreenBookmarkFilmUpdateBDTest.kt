@@ -1,54 +1,65 @@
-package com.example.wovie.bookmarks
+package com.example.wovie.integtarion.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.wovie.utils.CoroutineRule
 import com.example.wovie.api.ApiService
 import com.example.wovie.db.BookmarkRepository
-import com.example.wovie.ui.bookmarks.BookmarksViewModel
+import com.example.wovie.db.BookmarkRepositoryImpl
+import com.example.wovie.db.DatabaseService
+import com.example.wovie.ui.main.MainViewModel
 import com.example.wovie.ui.model.Film
-import com.example.wovie.utils.CoroutineRule
-import com.example.wovie.utils.getOrAwaitValue
+import java.io.IOException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
-import org.mockito.Mockito.`when`
 
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-class BookmarkScreenErrorUpdatingBookmarkStatusErrorMessageAppearsTest {
+class MainScreenBookmarkFilmUpdateBDTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
     @get:Rule
     var coroutineRule = CoroutineRule()
 
-    private lateinit var bookmarksViewModel: BookmarksViewModel
+    private lateinit var bookmarksRepository: BookmarkRepository
+    private lateinit var mainViewModel: MainViewModel
+    private lateinit var db: DatabaseService
     private val apiService = Mockito.mock(ApiService::class.java)
-    private val bookmarksRepository = Mockito.spy(BookmarkRepository::class.java)
 
     private val filmMock = getFilmMock()
 
     @Before
-    fun before() = runTest(StandardTestDispatcher()) {
-        bookmarksViewModel = BookmarksViewModel(bookmarksRepository, apiService)
-
-        `when`(bookmarksRepository.insertBookmarkedMovie(FILM_ID)).thenThrow(RuntimeException::class.java)
+    fun before() {
+        db = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), DatabaseService::class.java).build()
+        bookmarksRepository = BookmarkRepositoryImpl(db)
+        mainViewModel = MainViewModel(apiService, bookmarksRepository)
     }
 
     @Test
     fun test(): Unit = runTest(StandardTestDispatcher()) {
-        bookmarksViewModel.setBookMarkStatus(filmMock)
+        mainViewModel.setBookMarkStatus(filmMock)
         advanceUntilIdle()
-        val result = bookmarksViewModel.msg.getOrAwaitValue()
-        val msg = "operation failed"
-        Assert.assertEquals(result, msg)
+        val list = bookmarksRepository.getAllBookmarks()
+        Assert.assertNotNull(list.find { it.movieId == FILM_ID })
+    }
+
+    @After
+    @Throws(IOException::class)
+    fun closeDb() {
+        db.close()
     }
 
     private fun getFilmMock() = Film(

@@ -11,6 +11,7 @@ import com.example.wovie.api.response.TopRated
 import com.example.wovie.api.response.Upcoming
 import com.example.wovie.db.BookmarkRepository
 import com.example.wovie.ui.model.Film
+import com.example.wovie.util.IdlingResource
 import com.example.wovie.util.toFilm
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.net.UnknownHostException
@@ -34,6 +35,7 @@ class MainViewModel @Inject constructor(
     val upcomingMutableLiveData = MutableLiveData<List<Film>>()
 
     fun getFilms() {
+        IdlingResource.increment()
         viewModelScope.launch {
             try {
                 coroutineScope {
@@ -45,6 +47,7 @@ class MainViewModel @Inject constructor(
                         var topRatedResults: TopRated? = null
                         var upcomingResults: Upcoming? = null
                         var bookmarkedMovies: List<Int> = mutableListOf()
+                        IdlingResource.increment()
                         val popular = async {
                             popularResults = apiService.getPopularMovies()
                             nowPlayingResults = apiService.getNowPlayingMovies()
@@ -66,20 +69,25 @@ class MainViewModel @Inject constructor(
                             upcomingMutableLiveData.postValue(upcomingResults?.results?.map { response ->
                                 response.toFilm(bookmarkedMovies.contains(response.id))
                             })
+                            IdlingResource.decrement()
                         }
                     } catch (exception: Exception) {
                         Log.i("popular exeception", exception.message.toString())
+                        IdlingResource.decrement()
                     }
 
                     loading.postValue(false)
+                    IdlingResource.decrement()
                 }
             }
             catch (unknownHostException:UnknownHostException) {
                 Log.i("error",unknownHostException.message.toString())
                 msg.postValue("No internet connection")
+                IdlingResource.decrement()
             }
             catch (exception :Exception){
                 Log.i("error",exception.message.toString())
+                IdlingResource.decrement()
             }
 
         }
@@ -87,6 +95,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun setBookMarkStatus(film: Film) {
+        IdlingResource.increment()
         viewModelScope.launch {
             try {
                 if (!film.isBookmarked) {
@@ -98,6 +107,7 @@ class MainViewModel @Inject constructor(
                 Log.i("bookmark", e.message.toString())
                 msg.postValue("operation failed")
             }
+            IdlingResource.decrement()
         }
     }
 }

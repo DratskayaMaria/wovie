@@ -15,6 +15,7 @@ import com.example.wovie.databinding.FragmentFilmBinding
 import com.example.wovie.ui.main.MainAdapter
 import com.example.wovie.ui.model.Actor
 import com.example.wovie.ui.model.Film
+import com.example.wovie.util.IdlingResource
 import com.example.wovie.util.loadImage
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -72,7 +73,7 @@ class FilmFragment : Fragment() {
         filmViewModel.getRecommendedList(film.filmId)
         filmViewModel.loading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressbar.isVisible = isLoading
-            binding.filmInfo.isVisible = !isLoading
+            binding.filmContainer.isVisible = !isLoading
         }
         filmViewModel.genres.observe(viewLifecycleOwner) { responseGenres ->
             film.genres?.map { filmGenreId ->

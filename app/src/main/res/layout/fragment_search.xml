@@ -68,7 +68,17 @@
             />
     </FrameLayout>
 
-
+    <TextView
+        android:id="@+id/error_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/sv_container"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textAlignment="center"
+        android:textSize="28sp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_results"
